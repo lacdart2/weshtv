@@ -111,6 +111,7 @@ export default function Home() {
                 </div>
             </nav>
 
+            <div style={{ height: 8 }} />
             {/* NEXT FEATURED BANNER */}
             {!loading && (
                 <NextFeaturedBanner
@@ -122,7 +123,7 @@ export default function Home() {
 
             {/* HERO */}
             <div style={{
-                padding: '24px 20px 20px',
+                padding: '32px 20px 24px',
                 borderBottom: '1px solid var(--border)',
                 position: 'relative',
                 overflow: 'hidden',
@@ -346,15 +347,12 @@ export default function Home() {
                         fontSize: 13,
                         color: '#666',
                         fontFamily: 'var(--font-inter)',
-                        lineHeight: 1.6,
-                        maxWidth: 300,
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
                         gap: 6,
                     }}>
-                        <Tv size={14} color="#666" />
-                        Never miss a match because you couldn't find the channel.
+                        <Tv size={13} color="#666" style={{ flexShrink: 0 }} />
+                        Every match. Right channel. Right time.
                     </p>
 
                     <p style={{

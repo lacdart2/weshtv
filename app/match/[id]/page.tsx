@@ -504,8 +504,8 @@ export default function MatchDetailPage() {
                         </div>
                     </Card>
 
-                    {venue && (
-                        <Card title="Venue">
+                    <Card title="Location">
+                        {venue ? (
                             <div style={{ display: 'grid', gap: 8 }}>
                                 <InfoRow label="Stadium" value={venue.name} />
                                 <InfoRow label="City" value={venue.city} />
@@ -516,27 +516,30 @@ export default function MatchDetailPage() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: 6,
-                                        padding: '10px 14px',
-                                        borderRadius: 10,
+                                        display: 'flex', alignItems: 'center',
+                                        justifyContent: 'center', gap: 8,
+                                        padding: '10px 14px', borderRadius: 10,
                                         background: 'rgba(46,204,113,0.06)',
                                         border: '1px solid rgba(46,204,113,0.2)',
-                                        color: 'var(--accent)',
-                                        fontSize: 12,
-                                        fontWeight: 600,
-                                        textDecoration: 'none',
-                                        fontFamily: 'var(--font-inter)',
-                                        marginTop: 4,
+                                        color: 'var(--accent)', fontSize: 13,
+                                        fontWeight: 600, textDecoration: 'none',
+                                        fontFamily: 'var(--font-inter)', marginTop: 4,
                                     }}
                                 >
-                                    <MapPin size={13} />  View on Google Maps
+                                    <MapPin size={14} /> Open in Maps
                                 </a>
                             </div>
-                        </Card>
-                    )}
+                        ) : (
+                            <div style={{
+                                display: 'flex', alignItems: 'center', gap: 10,
+                                padding: '12px 0', color: '#555', fontSize: 13,
+                                fontFamily: 'var(--font-inter)',
+                            }}>
+                                <MapPin size={14} color="#555" />
+                                Venue not yet confirmed — check back closer to the tournament.
+                            </div>
+                        )}
+                    </Card>
 
                     {weather && (
                         <Card title="Weather">
