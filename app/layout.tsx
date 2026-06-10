@@ -6,18 +6,22 @@ export const metadata: Metadata = {
     description: 'World Cup 2026 · Every match, the right channel, in your timezone.',
     manifest: '/manifest.json',
     icons: { icon: '/favicon.svg', apple: '/icon-192.png' },
-    themeColor: '#090909',
-    appleWebApp: {
-        capable: true,
-        statusBarStyle: 'black-translucent',
-        title: 'WESHTV',
-    },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                {children}
+                <script dangerouslySetInnerHTML={{
+                    __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js')
+            })
+          }
+        `}} />
+            </body>
         </html>
     )
 }
