@@ -574,6 +574,27 @@ export default function MatchDetailPage() {
                         </Card>
                     )}
                 </section>
+                {/* Footer */}
+                <div style={{
+                    marginTop: 32, padding: '20px',
+                    borderTop: '1px solid var(--border)',
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', gap: 8, textAlign: 'center',
+                }}>
+                    <span style={{
+                        fontFamily: 'var(--font-barlow)',
+                        fontSize: 16, fontWeight: 900,
+                        letterSpacing: '0.08em', color: 'var(--text)',
+                    }}>
+                        WESH<span style={{ color: 'var(--accent)' }}>TV</span>
+                    </span>
+                    <p style={{ fontSize: 11, color: '#555', fontFamily: 'var(--font-inter)' }}>
+                        Every match. Right channel. Right time.
+                    </p>
+                </div>
+
+                {/* Bottom padding for nav */}
+                <div style={{ height: 72 }} />
             </main>
         </div>
     )

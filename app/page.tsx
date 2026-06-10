@@ -10,6 +10,7 @@ import NextFeaturedBanner from '@/components/NextFeaturedBanner'
 import InstallBanner from '@/components/InstallBanner'
 import MatchCard from '@/components/MatchCard'
 import { Tv, Coffee } from 'lucide-react'
+import BottomNav from '@/components/BottomNav'
 
 const WORLD_CUP_START = '2026-06-11'
 
@@ -62,7 +63,9 @@ export default function Home() {
         () => allMatches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED').length,
         [allMatches]
     )
-
+    function toggleRegion() {
+        setRegion(r => r === 'dz' ? 'no' : 'dz')
+    }
     return (
         <div style={{ minHeight: '100vh', background: 'var(--black)' }}>
 
@@ -333,7 +336,7 @@ export default function Home() {
                 }}>
                     <span style={{
                         fontFamily: 'var(--font-barlow)',
-                        fontSize: 24, fontWeight: 900,
+                        fontSize: 16, fontWeight: 900,
                         letterSpacing: '0.08em', color: 'var(--text)',
                     }}>
                         WESH<span style={{ color: 'var(--accent)' }}>TV</span>
@@ -359,7 +362,9 @@ export default function Home() {
                 </div>
 
             </div>
+            <div style={{ height: 72 }} />
 
+            <BottomNav region={region} onRegionToggle={toggleRegion} />
             <InstallBanner />
 
         </div>
