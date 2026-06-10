@@ -24,8 +24,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className={`${barlow.variable} ${inter.variable}`}>
-            <body>
+        <html lang="en" className={`${barlow.variable} ${inter.variable}`} style={{ colorScheme: 'dark', background: '#090909' }}>
+            <head>
+                <meta name="color-scheme" content="dark" />
+                <meta name="theme-color" content="#090909" />
+            </head>
+            <body style={{ background: '#090909', color: '#efefef' }}>
                 {children}
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-WWNHTMHKQV"
