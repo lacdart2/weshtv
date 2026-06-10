@@ -45,7 +45,7 @@ export default function BottomNav({
             </Link>
 
             {/* Today shortcut — scrolls date strip to today */}
-            <Link href="/" style={{
+            <Link href="/schedule" style={{
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 4,
                 textDecoration: 'none',
