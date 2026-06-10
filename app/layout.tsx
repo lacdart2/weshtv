@@ -4,8 +4,13 @@ import './globals.css'
 export const metadata: Metadata = {
     title: 'WESHTV',
     description: 'World Cup 2026 · Every match, the right channel, in your timezone.',
-    icons: {
-        icon: '/favicon.svg',
+    manifest: '/manifest.json',
+    icons: { icon: '/favicon.svg', apple: '/icon-192.png' },
+    themeColor: '#090909',
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'black-translucent',
+        title: 'WESHTV',
     },
 }
 

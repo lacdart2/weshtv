@@ -72,3 +72,27 @@ export function getFullDateLabel(dateStr: string): string {
 export function todayStr(): string {
     return new Date().toISOString().split('T')[0]
 }
+// Check if a match time is late night (00:00 - 06:00) in given region
+export function isLateNight(utcDate: string, region: Region): boolean {
+    const date = new Date(utcDate)
+    const hour = parseInt(
+        date.toLocaleTimeString('fr-FR', {
+            hour: '2-digit',
+            timeZone: TIMEZONES[region],
+        })
+    )
+    return hour >= 0 && hour < 6
+}
+
+// Check if match involves a "featured" team for our audience
+export const FEATURED_TEAMS = ['ALG', 'TUN', 'MAR', 'NOR']
+
+export function isFeaturedMatch(homeShort: string, awayShort: string): boolean {
+    return FEATURED_TEAMS.includes(homeShort) || FEATURED_TEAMS.includes(awayShort)
+}
+
+export function getFeaturedTeam(homeShort: string, awayShort: string): string | null {
+    if (FEATURED_TEAMS.includes(homeShort)) return homeShort
+    if (FEATURED_TEAMS.includes(awayShort)) return awayShort
+    return null
+}
