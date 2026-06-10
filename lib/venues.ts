@@ -30,6 +30,7 @@ export function getVenue(venueName: string | undefined): Venue | null {
     if (!venueName) return null
     // exact match first
     if (VENUES[venueName]) return VENUES[venueName]
+    if (!venueName || venueName === 'TBC') return null
     // partial match
     const key = Object.keys(VENUES).find(k =>
         venueName.toLowerCase().includes(k.toLowerCase()) ||

@@ -96,7 +96,7 @@ export default function MatchDetailPage() {
     useEffect(() => {
         if (!match) return
 
-        const venue = getVenue(match.venue)
+        const venue = getVenue(match.venue) ?? getVenue(match.venue?.split(',')[0])
 
         if (venue) {
             fetchWeather(venue.lat, venue.lon, match.utcDate).then(setWeather)
@@ -804,13 +804,11 @@ function ChannelPill({
                 {name}
             </span>
 
-            {channel && (
-                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {channel && channel.type !== 'premium' && (
+                <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#666' }}>
                     {channel.type === 'free'
                         ? <><Tv size={10} /> Free to air</>
-                        : channel.type === 'streaming'
-                            ? <><Wifi size={10} /> Streaming</>
-                            : <><CreditCard size={10} /> Subscription</>}
+                        : <><Wifi size={10} /> Streaming</>}
                 </span>
             )}
         </div>
