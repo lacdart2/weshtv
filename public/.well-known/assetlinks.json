@@ -1,0 +1,12 @@
+[
+          {
+                    "relation": ["delegate_permission/common.handle_all_urls"],
+                    "target": {
+                              "namespace": "android_app",
+                              "package_name": "com.weshtv.app",
+                              "sha256_cert_fingerprints": [
+                                        "3A:8E:44:DA:1B:B6:BD:76:24:CF:D6:FA:50:68:0C:89:10:1D:17:5B:8E:4E:47:CF:41:DF:EB:0E:9A:6D:BA:CA"
+                              ]
+                    }
+          }
+]
