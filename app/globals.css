@@ -1,3 +1,7 @@
+html {
+    color-scheme: dark;
+}
+
 :root {
     --black: #090909;
     --surface: #131313;
@@ -22,9 +26,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    background: var(--black);
-    color: var(--text);
+html, body {
+    background: #090909 !important;
+    color: #efefef;
     font-family: var(--font-inter), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
 }

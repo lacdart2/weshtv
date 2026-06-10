@@ -192,7 +192,7 @@ export default function SchedulePage() {
                             }}>
                                 {formatDate(date)}
                             </span>
-                            <span style={{ fontSize: 11, color: '#444' }}>
+                            <span style={{ fontSize: 11, color: '#777' }}>
                                 {grouped[date].length} matches
                             </span>
                         </div>
@@ -264,7 +264,7 @@ export default function SchedulePage() {
                                                         {t.local}
                                                     </span>
                                                 )}
-                                                <div style={{ fontSize: 9, color: '#444', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 1 }}>
+                                                <div style={{ fontSize: 9, color: '#666', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 1 }}>
                                                     {finished ? 'FT' : live ? '' : 'KO'}
                                                 </div>
                                             </div>
@@ -305,7 +305,7 @@ export default function SchedulePage() {
                                                 </span>
 
                                                 {match.group && (
-                                                    <span style={{ fontSize: 10, color: '#444', marginLeft: 4 }}>
+                                                    <span style={{ fontSize: 10, color: '#777', marginLeft: 4 }}>
                                                         {match.group.replace(/_/g, ' ')}
                                                     </span>
                                                 )}
@@ -338,7 +338,7 @@ export default function SchedulePage() {
                 {filtered.length === 0 && (
                     <div style={{
                         padding: '60px 0', textAlign: 'center',
-                        color: '#444', fontSize: 14,
+                        color: '#666', fontSize: 14,
                     }}>
                         No matches found.
                     </div>
