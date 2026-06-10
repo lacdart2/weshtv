@@ -85,10 +85,17 @@ export function isLateNight(utcDate: string, region: Region): boolean {
 }
 
 // Check if match involves a "featured" team for our audience
-export const FEATURED_TEAMS = ['ALG', 'TUN', 'MAR', 'NOR']
+export const FEATURED_TEAMS = [
+    'ALG', 'DZA',
+    'TUN',
+    'MAR', 'MOR',
+    'NOR',
+    'EGY',
+]
 
 export function isFeaturedMatch(homeShort: string, awayShort: string): boolean {
-    return FEATURED_TEAMS.includes(homeShort) || FEATURED_TEAMS.includes(awayShort)
+    const teams = [homeShort?.toUpperCase(), awayShort?.toUpperCase()]
+    return teams.some(t => FEATURED_TEAMS.includes(t ?? ''))
 }
 
 export function getFeaturedTeam(homeShort: string, awayShort: string): string | null {
