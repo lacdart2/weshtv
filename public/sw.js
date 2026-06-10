@@ -1,21 +1,54 @@
-const CACHE = 'weshtv-v1'
+const CACHE_NAME = 'weshtv-static-v2'
 
-const STATIC = [
-    '/',
+const STATIC_ASSETS = [
     '/manifest.json',
     '/favicon.svg',
     '/icon-192.png',
     '/icon-512.png',
 ]
 
-self.addEventListener('install', e => {
-    e.waitUntil(
-        caches.open(CACHE).then(c => c.addAll(STATIC))
+self.addEventListener('install', event => {
+    self.skipWaiting()
+
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
     )
 })
 
-self.addEventListener('fetch', e => {
-    e.respondWith(
-        caches.match(e.request).then(cached => cached || fetch(e.request))
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames =>
+            Promise.all(
+                cacheNames
+                    .filter(cacheName => cacheName !== CACHE_NAME)
+                    .map(cacheName => caches.delete(cacheName))
+            )
+        ).then(() => self.clients.claim())
+    )
+})
+
+self.addEventListener('fetch', event => {
+    const requestUrl = new URL(event.request.url)
+
+    if (event.request.method !== 'GET') {
+        return
+    }
+
+    if (requestUrl.pathname.startsWith('/api/')) {
+        event.respondWith(fetch(event.request))
+        return
+    }
+
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).catch(() => caches.match('/'))
+        )
+        return
+    }
+
+    event.respondWith(
+        caches.match(event.request).then(cachedResponse => {
+            return cachedResponse || fetch(event.request)
+        })
     )
 })
