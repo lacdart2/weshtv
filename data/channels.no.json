@@ -1,0 +1,40 @@
+{
+          "region": "Norway",
+          "flag": "🇳🇴",
+          "timezone": "Europe/Oslo",
+          "note": "NRK (free) and TV 2 (subscription) share all 104 matches. NRK is completely free to watch.",
+          "channels": [
+                    {
+                              "name": "NRK1",
+                              "type": "free",
+                              "coverage": "~52 matches — free to air",
+                              "color": "#e74c3c"
+                    },
+                    {
+                              "name": "NRK2",
+                              "type": "free",
+                              "coverage": "selected matches — free to air",
+                              "color": "#c0392b"
+                    },
+                    {
+                              "name": "TV 2",
+                              "type": "premium",
+                              "coverage": "~52 matches — subscription required",
+                              "color": "#2ecc71"
+                    },
+                    {
+                              "name": "TV 2 Play",
+                              "type": "streaming",
+                              "coverage": "all TV 2 matches — online streaming",
+                              "color": "#27ae60"
+                    }
+          ],
+          "specialMatches": {
+                    "NOR": ["TV 2", "TV 2 Play"],
+                    "NOR_R32": ["TV 2", "TV 2 Play"],
+                    "NOR_R16": ["NRK1"],
+                    "final": ["NRK1", "TV 2"],
+                    "semi_final": ["NRK1", "TV 2"],
+                    "default": ["NRK1", "TV 2", "TV 2 Play"]
+          }
+}

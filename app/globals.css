@@ -1,0 +1,53 @@
+:root {
+    --black: #090909;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #1f1f1f;
+    --accent: #2ecc71;
+    --accent-dim: rgba(46, 204, 113, 0.08);
+    --accent-mid: rgba(46, 204, 113, 0.18);
+    --red: #e74c3c;
+    --text: #efefef;
+    --text-dim: #999999;
+    --text-muted: #666666;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--black);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+* {
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    color: var(--text);
+}
+
+span, p, div {
+    color: inherit;
+}

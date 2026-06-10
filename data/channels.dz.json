@@ -1,0 +1,51 @@
+{
+          "region": "Algeria / Tunisia / Morocco",
+          "flag": "🇩🇿",
+          "timezone": "Africa/Algiers",
+          "note": "beIN Sports holds exclusive MENA rights. EPTV (Algérie 1) acquired 13 matches including all 3 Algeria group games — free to air.",
+          "channels": [
+                    {
+                              "name": "beIN Sports MAX 1",
+                              "type": "premium",
+                              "coverage": "all 104 matches",
+                              "color": "#9b59b6"
+                    },
+                    {
+                              "name": "beIN Sports MAX 2",
+                              "type": "premium",
+                              "coverage": "simultaneous matches",
+                              "color": "#8e44ad"
+                    },
+                    {
+                              "name": "beIN Sports MAX 3",
+                              "type": "premium",
+                              "coverage": "simultaneous matches",
+                              "color": "#7d3c98"
+                    },
+                    {
+                              "name": "Algérie 1",
+                              "type": "free",
+                              "coverage": "13 matches including all Algeria group games — FREE",
+                              "color": "#27ae60"
+                    },
+                    {
+                              "name": "beIN CONNECT",
+                              "type": "streaming",
+                              "coverage": "all 104 matches — online",
+                              "color": "#6c3483"
+                    }
+          ],
+          "specialMatches": {
+                    "ALG": ["Algérie 1", "beIN Sports MAX 1"],
+                    "TUN": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
+                    "MAR": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
+                    "EGY": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
+                    "final": ["beIN Sports MAX 1"],
+                    "semi_final": ["beIN Sports MAX 1"],
+                    "default": [
+                              "beIN Sports MAX 1",
+                              "beIN Sports MAX 2",
+                              "beIN Sports MAX 3"
+                    ]
+          }
+}
