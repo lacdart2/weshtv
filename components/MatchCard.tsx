@@ -11,6 +11,7 @@ import LiveDot from './LiveDot'
 import ChannelPill from './ChannelPill'
 import TimeTooltip from './TimeTooltip'
 import { Moon, Share2, Copy, Check } from 'lucide-react'
+import { getVenueByTeams } from '@/lib/matchVenues'
 
 export default function MatchCard({
     match,
@@ -42,7 +43,8 @@ export default function MatchCard({
         match.stage
     )
 
-    const venue = getVenue(match.venue)
+    const venueNameFromTeams = getVenueByTeams(match.homeTeam.short, match.awayTeam.short)
+    const venue = getVenue(match.venue) ?? getVenue(venueNameFromTeams ?? '')
 
     function shareMatch(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault()

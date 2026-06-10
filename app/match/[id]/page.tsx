@@ -10,7 +10,8 @@ import {
     getChannelColor,
     type Region,
 } from '@/lib/channels'
-import { MapPin, Tv, Clock, ChevronLeft, Moon, Wifi, CreditCard } from 'lucide-react'
+import { getVenueByTeams } from '@/lib/matchVenues'
+import { MapPin, Tv, Clock, ChevronLeft, Moon, Wifi } from 'lucide-react'
 import { getAllTimes, isLateNight } from '@/lib/utils'
 import { getVenue } from '@/lib/venues'
 
@@ -120,7 +121,8 @@ export default function MatchDetailPage() {
     }
 
     const t = getAllTimes(match.utcDate, region)
-    const venue = getVenue(match.venue)
+    const venueNameFromTeams = getVenueByTeams(match.homeTeam.short, match.awayTeam.short)
+    const venue = getVenue(match.venue) ?? getVenue(venueNameFromTeams ?? '')
     const channels = getChannelsForMatch(
         region,
         match.homeTeam.short,
@@ -201,8 +203,6 @@ export default function MatchDetailPage() {
             >
                 <section
                     style={{
-                        background:
-                            'linear-gradient(135deg, rgba(46,204,113,0.08), var(--surface) 42%, #070707)',
                         border: live
                             ? '1px solid rgba(231,76,60,0.45)'
                             : '1px solid rgba(46,204,113,0.25)',
@@ -212,8 +212,18 @@ export default function MatchDetailPage() {
                         boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
                         position: 'relative',
                         overflow: 'hidden',
+                        background: 'var(--surface)',
                     }}
                 >
+                    {/* Stadium background */}
+                    <div style={{
+                        position: 'absolute', inset: 0, zIndex: 0,
+                        backgroundImage: 'url(https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&q=80)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center 30%',
+                        opacity: 0.12,
+                        pointerEvents: 'none',
+                    }} />
                     <FlagBackdrop
                         homeFlag={match.homeTeam.flag}
                         awayFlag={match.awayTeam.flag}
@@ -239,19 +249,6 @@ export default function MatchDetailPage() {
                     >
                         2026
                     </div>
-
-                    <div
-                        aria-hidden="true"
-                        style={{
-                            position: 'absolute',
-                            inset: 0,
-                            zIndex: 1,
-                            background:
-                                'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.78))',
-                            pointerEvents: 'none',
-                        }}
-                    />
-
                     <div
                         style={{
                             position: 'absolute',
@@ -406,7 +403,7 @@ export default function MatchDetailPage() {
                         <InfoCard label="Kickoff" value={t.local} />
                         <InfoCard
                             label="Region"
-                            value={REGIONS[region]?.name ?? 'Algeria'}
+                            value={REGIONS[region]?.region ?? 'Algeria'}
                         />
                     </div>
 
@@ -536,7 +533,7 @@ export default function MatchDetailPage() {
                                 fontFamily: 'var(--font-inter)',
                             }}>
                                 <MapPin size={14} color="#555" />
-                                Venue not yet confirmed — check back closer to the tournament.
+                                Location not yet confirmed — check back closer to the tournament.
                             </div>
                         )}
                     </Card>

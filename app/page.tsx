@@ -4,9 +4,7 @@ import { useState, useMemo, useEffect } from 'react'
 import type { Match } from '@/lib/matches'
 import { MOCK_MATCHES } from '@/lib/matches'
 import { REGIONS, type Region } from '@/lib/channels'
-import {
-    getDayLabel, getFullDateLabel, todayStr,
-} from '@/lib/utils'
+import { getDayLabel, getFullDateLabel, todayStr } from '@/lib/utils'
 import { filterByDate, getUniqueDates } from '@/lib/api'
 import NextFeaturedBanner from '@/components/NextFeaturedBanner'
 import InstallBanner from '@/components/InstallBanner'
@@ -15,7 +13,6 @@ import { Tv, Coffee } from 'lucide-react'
 
 const WORLD_CUP_START = '2026-06-11'
 
-// ── Data hook ──────────────────────────────────────────────
 function useMatches() {
     const [matches, setMatches] = useState<Match[]>([])
     const [loading, setLoading] = useState(true)
@@ -43,8 +40,6 @@ function useMatches() {
     return { matches, loading, source }
 }
 
-
-// ── Page ───────────────────────────────────────────────────
 export default function Home() {
     const { matches: allMatches, loading, source } = useMatches()
     const [region, setRegion] = useState<Region>('dz')
@@ -53,7 +48,6 @@ export default function Home() {
     const dates = useMemo(() => getUniqueDates(allMatches), [allMatches])
     const today = todayStr()
 
-    // Set date once when matches load — never again
     const selectedDateResolved = useMemo(() => {
         if (selectedDate) return selectedDate
         return dates.find(d => d >= WORLD_CUP_START) ?? dates[0] ?? ''
@@ -68,6 +62,7 @@ export default function Home() {
         () => allMatches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED').length,
         [allMatches]
     )
+
     return (
         <div style={{ minHeight: '100vh', background: 'var(--black)' }}>
 
@@ -111,8 +106,10 @@ export default function Home() {
                 </div>
             </nav>
 
+            {/* BREATHING ROOM */}
             <div style={{ height: 8 }} />
-            {/* NEXT FEATURED BANNER */}
+
+            {/* BANNER */}
             {!loading && (
                 <NextFeaturedBanner
                     matches={allMatches}
@@ -121,114 +118,115 @@ export default function Home() {
                 />
             )}
 
-            {/* HERO */}
+            {/* HERO — stadium bg only here */}
             <div style={{
                 padding: '32px 20px 24px',
                 borderBottom: '1px solid var(--border)',
                 position: 'relative',
                 overflow: 'hidden',
+                backgroundImage: 'url(https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&q=80)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 30%',
             }}>
-                {/* Background decoration */}
+                {/* Dark overlay */}
                 <div style={{
-                    position: 'absolute',
-                    right: -40, top: -40,
-                    width: 220, height: 220,
-                    borderRadius: '50%',
-                    border: '1px solid rgba(46,204,113,0.06)',
-                    pointerEvents: 'none',
-                }} />
-                <div style={{
-                    position: 'absolute',
-                    right: 10, top: 10,
-                    width: 120, height: 120,
-                    borderRadius: '50%',
-                    border: '1px solid rgba(46,204,113,0.04)',
-                    pointerEvents: 'none',
+                    position: 'absolute', inset: 0,
+                    background: 'rgba(9,9,9,0.91)',
+                    zIndex: 0, pointerEvents: 'none',
                 }} />
 
-                {/* Eyebrow */}
-                <div style={{
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    marginBottom: 12,
-                }}>
-                    <div style={{ width: 18, height: 1, background: 'var(--accent)' }} />
-                    <span style={{
-                        fontSize: 9, color: 'var(--accent)',
-                        letterSpacing: '0.2em', textTransform: 'uppercase',
-                        fontWeight: 600, fontFamily: 'var(--font-inter)',
-                    }}>
-                        FIFA World Cup 2026
-                    </span>
-                </div>
-
-                {/* Main title */}
-                <div style={{ marginBottom: 10 }}>
+                {/* Content above overlay */}
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                    {/* Decoration circles */}
                     <div style={{
-                        fontFamily: 'var(--font-barlow)',
-                        fontWeight: 900,
-                        textTransform: 'uppercase',
-                        lineHeight: 0.9,
-                        letterSpacing: '-0.01em',
-                    }}>
+                        position: 'absolute', right: -40, top: -40,
+                        width: 220, height: 220, borderRadius: '50%',
+                        border: '1px solid rgba(46,204,113,0.06)',
+                        pointerEvents: 'none',
+                    }} />
+                    <div style={{
+                        position: 'absolute', right: 10, top: 10,
+                        width: 120, height: 120, borderRadius: '50%',
+                        border: '1px solid rgba(46,204,113,0.04)',
+                        pointerEvents: 'none',
+                    }} />
+
+                    {/* Eyebrow */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                        <div style={{ width: 18, height: 1, background: 'var(--accent)' }} />
                         <span style={{
-                            fontSize: 'clamp(52px, 10vw, 88px)',
-                            color: 'var(--text)',
-                            display: 'inline',
+                            fontSize: 9, color: 'var(--accent)',
+                            letterSpacing: '0.2em', textTransform: 'uppercase',
+                            fontWeight: 600, fontFamily: 'var(--font-inter)',
                         }}>
-                            Wesh,{' '}
-                        </span>
-                        <span style={{
-                            fontSize: 'clamp(16px, 2.8vw, 26px)',
-                            display: 'inline',
-                            fontFamily: 'var(--font-inter)',
-                            fontWeight: 300,
-                            letterSpacing: '0.01em',
-                            color: '#555',
-                            textTransform: 'none',
-                        }}>
-                            c'est sur quelle{' '}
-                            <span style={{
-                                fontFamily: 'var(--font-barlow)',
-                                fontWeight: 900,
-                                fontSize: 'clamp(22px, 4vw, 38px)',
-                                color: 'var(--accent)',
-                                letterSpacing: '0.04em',
-                                textTransform: 'uppercase',
-                            }}>
-                                chaîne
-                            </span>
-                            {' '}et à quelle{' '}
-                            <span style={{
-                                fontFamily: 'var(--font-barlow)',
-                                fontWeight: 900,
-                                fontSize: 'clamp(22px, 4vw, 38px)',
-                                color: 'var(--accent)',
-                                opacity: 0.55,
-                                letterSpacing: '0.04em',
-                                textTransform: 'uppercase',
-                            }}>
-                                heure?
-                            </span>
+                            FIFA World Cup 2026
                         </span>
                     </div>
-                </div>
 
-                {/* Bottom meta row */}
-                <div style={{
-                    display: 'flex', alignItems: 'center',
-                    gap: 16, flexWrap: 'wrap',
-                }}>
-                    <span style={{ fontSize: 11, color: '#888', fontFamily: 'var(--font-inter)' }}>
-                        48 teams · 104 matches · Jun 11 – Jul 19
-                    </span>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                        {['🇺🇸', '🇨🇦', '🇲🇽'].map(flag => (
-                            <span key={flag} style={{ fontSize: 14 }}>{flag}</span>
-                        ))}
+                    {/* Title */}
+                    <div style={{ marginBottom: 10 }}>
+                        <div style={{
+                            fontFamily: 'var(--font-barlow)',
+                            fontWeight: 900,
+                            textTransform: 'uppercase',
+                            lineHeight: 0.9,
+                            letterSpacing: '-0.01em',
+                        }}>
+                            <span style={{ fontSize: 'clamp(52px, 10vw, 88px)', color: 'var(--text)', display: 'inline' }}>
+                                Wesh,{' '}
+                            </span>
+                            <span style={{
+                                fontSize: 'clamp(16px, 2.8vw, 26px)',
+                                display: 'inline',
+                                fontFamily: 'var(--font-inter)',
+                                fontWeight: 300,
+                                letterSpacing: '0.01em',
+                                color: '#555',
+                                textTransform: 'none',
+                            }}>
+                                c'est sur quelle{' '}
+                                <span style={{
+                                    fontFamily: 'var(--font-barlow)',
+                                    fontWeight: 900,
+                                    fontSize: 'clamp(22px, 4vw, 38px)',
+                                    color: 'var(--accent)',
+                                    letterSpacing: '0.04em',
+                                    textTransform: 'uppercase',
+                                }}>
+                                    chaîne
+                                </span>
+                                {' '}et à quelle{' '}
+                                <span style={{
+                                    fontFamily: 'var(--font-barlow)',
+                                    fontWeight: 900,
+                                    fontSize: 'clamp(22px, 4vw, 38px)',
+                                    color: 'var(--accent)',
+                                    opacity: 0.55,
+                                    letterSpacing: '0.04em',
+                                    textTransform: 'uppercase',
+                                }}>
+                                    heure?
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Meta */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 11, color: '#888', fontFamily: 'var(--font-inter)' }}>
+                            48 teams · 104 matches · Jun 11 – Jul 19
+                        </span>
+                        <div style={{ display: 'flex', gap: 6 }}>
+                            {['🇺🇸', '🇨🇦', '🇲🇽'].map(flag => (
+                                <span key={flag} style={{ fontSize: 14 }}>{flag}</span>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
+            {/* HERO ENDS — bg image stops here */}
 
+            {/* REST OF PAGE — plain black bg */}
             <div style={{ maxWidth: 860, margin: '0 auto' }}>
 
                 {/* STATS */}
@@ -335,33 +333,23 @@ export default function Home() {
                 }}>
                     <span style={{
                         fontFamily: 'var(--font-barlow)',
-                        fontSize: 24,
-                        fontWeight: 900,
-                        letterSpacing: '0.08em',
-                        color: 'var(--text)',
+                        fontSize: 24, fontWeight: 900,
+                        letterSpacing: '0.08em', color: 'var(--text)',
                     }}>
                         WESH<span style={{ color: 'var(--accent)' }}>TV</span>
                     </span>
-
                     <p style={{
-                        fontSize: 13,
-                        color: '#666',
+                        fontSize: 13, color: '#666',
                         fontFamily: 'var(--font-inter)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 6,
+                        display: 'flex', alignItems: 'center', gap: 6,
                     }}>
                         <Tv size={13} color="#666" style={{ flexShrink: 0 }} />
                         Every match. Right channel. Right time.
                     </p>
-
                     <p style={{
-                        fontSize: 12,
-                        color: '#777',
+                        fontSize: 12, color: '#777',
                         fontFamily: 'var(--font-inter)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 6,
+                        display: 'flex', alignItems: 'center', gap: 6,
                     }}>
                         <Coffee size={13} color="#777" />
                         Made by <span style={{ color: 'var(--accent)', fontWeight: 700, marginLeft: 3 }}>Kader</span>
@@ -369,9 +357,11 @@ export default function Home() {
                         World Cup 2026
                     </p>
                 </div>
+
             </div>
 
             <InstallBanner />
+
         </div>
     )
 }
