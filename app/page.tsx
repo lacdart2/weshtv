@@ -50,22 +50,21 @@ function useMatches() {
 function detectRegionByTimezone(): Region {
     if (typeof window === 'undefined') return 'dz'
 
-    const savedRegion = localStorage.getItem('weshtv-region') as Region | null
+    const savedRegion = localStorage.getItem('weshtv-region') as string | null
 
-    if (savedRegion && REGIONS[savedRegion]) {
-        return savedRegion
+    if (savedRegion && savedRegion in REGIONS) {
+        return savedRegion as Region
     }
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    if (timezone === 'Europe/Oslo') return 'no'
-    if (timezone === 'Africa/Algiers') return 'dz'
-    if (timezone === 'Africa/Tunis') return 'tn'
-    if (timezone === 'Africa/Casablanca') return 'ma'
+    if (timezone === 'Europe/Oslo' && 'no' in REGIONS) return 'no' as Region
+    if (timezone === 'Africa/Algiers' && 'dz' in REGIONS) return 'dz' as Region
+    if (timezone === 'Africa/Tunis' && 'tn' in REGIONS) return 'tn' as Region
+    if (timezone === 'Africa/Casablanca' && 'ma' in REGIONS) return 'ma' as Region
 
     return 'dz'
 }
-
 export default function Home() {
     const { matches: allMatches, loading, source } = useMatches()
     const [region, setRegion] = useState<Region>('dz')
