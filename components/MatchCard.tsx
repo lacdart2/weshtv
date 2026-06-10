@@ -68,15 +68,18 @@ export default function MatchCard({ match, region }: {
     return (
         <div>
             <div style={{
-                background: featured ? 'rgba(46,204,113,0.04)' : 'var(--surface)',
+                background: featured ? 'rgba(46,204,113,0.05)' : 'var(--surface)',
                 border: featured
-                    ? '1px solid rgba(46,204,113,0.25)'
+                    ? '1px solid rgba(46,204,113,0.3)'
                     : live
-                        ? '1px solid rgba(231,76,60,0.25)'
+                        ? '1px solid rgba(231,76,60,0.3)'
                         : '1px solid var(--border)',
-                borderRadius: 12,
+                borderRadius: 14,
                 overflow: 'hidden',
                 position: 'relative',
+                boxShadow: featured
+                    ? '0 4px 24px rgba(46,204,113,0.08)'
+                    : '0 2px 12px rgba(0,0,0,0.4)',
             }}>
 
                 {/* Top accent bar */}
@@ -122,6 +125,8 @@ export default function MatchCard({ match, region }: {
                             width: 48, height: 48,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             background: 'var(--surface2)', borderRadius: 10, padding: 6,
+                            border: '1px solid #252525',
+                            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
                         }}>
                             <Crest src={match.homeTeam.flag} alt={match.homeTeam.name} size={36} />
                         </div>
@@ -141,9 +146,10 @@ export default function MatchCard({ match, region }: {
                             onClick={() => setShowTimes(v => !v)}
                             style={{
                                 background: showTimes ? 'var(--accent-dim)' : 'var(--surface2)',
-                                border: showTimes ? '1px solid rgba(46,204,113,0.3)' : '1px solid var(--border)',
-                                borderRadius: 6, padding: '3px 10px',
+                                border: showTimes ? '1px solid rgba(46,204,113,0.4)' : '1px solid #252525',
+                                borderRadius: 8, padding: '6px 14px',
                                 cursor: 'pointer', transition: 'all 0.15s',
+                                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
                             }}
                         >
                             <span style={{
@@ -190,7 +196,8 @@ export default function MatchCard({ match, region }: {
                     display: 'flex', alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '8px 14px 10px', gap: 8,
-                    borderTop: '1px solid var(--border)',
+                    borderTop: '1px solid #181818',
+                    background: '#0f0f0f',
                     flexWrap: 'wrap',
                 }}>
                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', alignItems: 'center' }}>
