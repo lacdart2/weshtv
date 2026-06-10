@@ -11,9 +11,11 @@ import {
     type Region,
 } from '@/lib/channels'
 import { getVenueByTeams } from '@/lib/matchVenues'
-import { MapPin, Tv, Clock, ChevronLeft, Moon, Wifi } from 'lucide-react'
+import { Tv, Coffee, MapPin, ChevronLeft, Moon, Wifi } from 'lucide-react'
 import { getAllTimes, isLateNight } from '@/lib/utils'
 import { getVenue } from '@/lib/venues'
+import Footer from '@/components/Footer'
+import BottomNav from '@/components/BottomNav'
 
 interface Weather {
     temp: number
@@ -145,8 +147,9 @@ export default function MatchDetailPage() {
         <div
             style={{
                 minHeight: '100vh',
-                background:
-                    'radial-gradient(circle at top, rgba(46,204,113,0.08), transparent 34%), var(--black)',
+                background: 'radial-gradient(circle at top, rgba(46,204,113,0.08), transparent 34%), var(--black)',
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
             <nav
@@ -199,6 +202,8 @@ export default function MatchDetailPage() {
                     maxWidth: 720,
                     margin: '0 auto',
                     padding: '24px 20px 40px',
+                    flex: 1,
+                    width: '100%',
                 }}
             >
                 <section
@@ -574,28 +579,18 @@ export default function MatchDetailPage() {
                         </Card>
                     )}
                 </section>
-                {/* Footer */}
-                <div style={{
-                    marginTop: 32, padding: '20px',
-                    borderTop: '1px solid var(--border)',
-                    display: 'flex', flexDirection: 'column',
-                    alignItems: 'center', gap: 8, textAlign: 'center',
-                }}>
-                    <span style={{
-                        fontFamily: 'var(--font-barlow)',
-                        fontSize: 16, fontWeight: 900,
-                        letterSpacing: '0.08em', color: 'var(--text)',
-                    }}>
-                        WESH<span style={{ color: 'var(--accent)' }}>TV</span>
-                    </span>
-                    <p style={{ fontSize: 11, color: '#555', fontFamily: 'var(--font-inter)' }}>
-                        Every match. Right channel. Right time.
-                    </p>
-                </div>
-
-                {/* Bottom padding for nav */}
-                <div style={{ height: 72 }} />
+                {/*      <div style={{ height: 72 }} />
             </main>
+            <Footer />
+            <BottomNav /> */}
+                <div style={{ height: 120 }} />
+            </main>
+
+            <div style={{ paddingBottom: 52 }}>
+                <Footer />
+            </div>
+
+            <BottomNav />
         </div>
     )
 }

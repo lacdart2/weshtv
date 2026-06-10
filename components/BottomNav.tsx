@@ -9,11 +9,10 @@ export default function BottomNav({
     region,
     onRegionToggle,
 }: {
-    region: Region
-    onRegionToggle: () => void
+    region?: Region
+    onRegionToggle?: () => void
 }) {
     const path = usePathname()
-    const isHome = path === '/'
 
     return (
         <div style={{
@@ -30,12 +29,11 @@ export default function BottomNav({
             paddingBottom: 'env(safe-area-inset-bottom)',
         }}>
 
-            {/* Home */}
             <Link href="/" style={{
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 4,
                 textDecoration: 'none',
-                color: isHome ? 'var(--accent)' : '#555',
+                color: path === '/' ? 'var(--accent)' : '#555',
                 transition: 'color 0.15s',
             }}>
                 <Home size={20} />
@@ -44,38 +42,36 @@ export default function BottomNav({
                 </span>
             </Link>
 
-            {/* Today shortcut — scrolls date strip to today */}
             <Link href="/schedule" style={{
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 4,
                 textDecoration: 'none',
-                color: '#555',
+                color: path === '/schedule' ? 'var(--accent)' : '#555',
                 transition: 'color 0.15s',
             }}>
                 <Calendar size={20} />
                 <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    Schedule
+                    Programme
                 </span>
             </Link>
 
-            {/* Region toggle */}
             <button
                 onClick={onRegionToggle}
                 style={{
                     display: 'flex', flexDirection: 'column',
                     alignItems: 'center', gap: 4,
                     background: 'transparent', border: 'none',
-                    cursor: 'pointer',
+                    cursor: onRegionToggle ? 'pointer' : 'default',
                     color: '#555',
                 }}
             >
-                <Globe size={20} color={region === 'dz' ? '#2ecc71' : '#888'} />
+                <Globe size={20} color={region === 'dz' ? '#2ecc71' : region === 'no' ? '#888' : '#555'} />
                 <span style={{
                     fontSize: 9, fontWeight: 600,
                     letterSpacing: '0.08em', textTransform: 'uppercase',
                     color: '#555',
                 }}>
-                    {region === 'dz' ? '🇩🇿 DZ' : '🇳🇴 NO'}
+                    {region === 'dz' ? '🇩🇿 DZ' : region === 'no' ? '🇳🇴 NO' : 'Region'}
                 </span>
             </button>
 
