@@ -51,6 +51,7 @@ export default function MatchCard({ match, region }: {
                 border: '1px solid var(--border)',
                 borderRadius: 12, padding: '12px 16px',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
             }}>
                 <div>
                     <div style={{ fontSize: 10, fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 3 }}>
@@ -58,7 +59,7 @@ export default function MatchCard({ match, region }: {
                     </div>
                     <div style={{ fontSize: 12, color: '#444' }}>Teams TBD — depends on group stage</div>
                 </div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', fontVariantNumeric: 'tabular-nums' }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', fontVariantNumeric: 'tabular-nums', fontFamily: 'var(--font-barlow)' }}>
                     {t.local}
                 </div>
             </div>
@@ -82,7 +83,7 @@ export default function MatchCard({ match, region }: {
                     : '0 2px 12px rgba(0,0,0,0.4)',
             }}>
 
-                {/* Top accent bar */}
+                {/* Top accent bar for featured */}
                 {featured && (
                     <div style={{ height: 2, background: 'linear-gradient(90deg, var(--accent), transparent)' }} />
                 )}
@@ -93,7 +94,11 @@ export default function MatchCard({ match, region }: {
                     justifyContent: 'space-between',
                     padding: '8px 14px 0', gap: 8,
                 }}>
-                    <span style={{ fontSize: 10, color: '#555', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                    <span style={{
+                        fontSize: 10, color: '#555',
+                        letterSpacing: '0.06em', textTransform: 'uppercase',
+                        fontFamily: 'var(--font-inter)',
+                    }}>
                         {match.group?.replace(/_/g, ' ')}
                     </span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -103,35 +108,47 @@ export default function MatchCard({ match, region }: {
                                 fontSize: 10, color: 'var(--red)', fontWeight: 600,
                                 background: 'rgba(231,76,60,0.1)', padding: '1px 6px',
                                 borderRadius: 4, border: '1px solid rgba(231,76,60,0.2)',
+                                fontFamily: 'var(--font-inter)',
                             }}>
                                 🌙 Late night
                             </span>
                         )}
                         {t.nextDay && !live && (
-                            <span style={{ fontSize: 10, color: 'var(--red)', fontWeight: 600 }}>+1 day</span>
+                            <span style={{
+                                fontSize: 10, color: 'var(--red)', fontWeight: 600,
+                                fontFamily: 'var(--font-inter)',
+                            }}>
+                                +1 day
+                            </span>
                         )}
                     </div>
                 </div>
 
                 {/* MAIN — home | time+score | away */}
                 <div style={{
-                    display: 'grid', gridTemplateColumns: '1fr auto 1fr',
-                    alignItems: 'center', padding: '12px 14px 10px', gap: 8,
+                    display: 'grid',
+                    gridTemplateColumns: '1fr auto 1fr',
+                    alignItems: 'center',
+                    padding: '12px 14px 10px',
+                    gap: 8,
+                    maxWidth: 480,
+                    margin: '0 auto',
+                    width: '100%',
                 }}>
 
                     {/* HOME */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                         <div style={{
-                            width: 48, height: 48,
+                            width: 52, height: 52,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            background: 'var(--surface2)', borderRadius: 10, padding: 6,
+                            background: 'var(--surface2)', borderRadius: 12, padding: 6,
                             border: '1px solid #252525',
                             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
                         }}>
                             <Crest src={match.homeTeam.flag} alt={match.homeTeam.name} size={36} />
                         </div>
                         <span style={{
-                            fontSize: 12, fontWeight: 800,
+                            fontSize: 13, fontWeight: 800,
                             letterSpacing: '0.08em', textTransform: 'uppercase',
                             color: 'var(--text)', textAlign: 'center',
                             fontFamily: 'var(--font-barlow)',
@@ -140,8 +157,11 @@ export default function MatchCard({ match, region }: {
                         </span>
                     </div>
 
-                    {/* CENTER */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 80 }}>
+                    {/* CENTER — time or score */}
+                    <div style={{
+                        display: 'flex', flexDirection: 'column',
+                        alignItems: 'center', gap: 4, minWidth: 90,
+                    }}>
                         <button
                             onClick={() => setShowTimes(v => !v)}
                             style={{
@@ -153,7 +173,7 @@ export default function MatchCard({ match, region }: {
                             }}
                         >
                             <span style={{
-                                fontSize: 16, fontWeight: 800,
+                                fontSize: 18, fontWeight: 900,
                                 fontVariantNumeric: 'tabular-nums',
                                 color: showTimes ? 'var(--accent)' : 'var(--text)',
                                 letterSpacing: '0.02em',
@@ -166,7 +186,11 @@ export default function MatchCard({ match, region }: {
                                         : t.local}
                             </span>
                         </button>
-                        <span style={{ fontSize: 9, color: '#555', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                        <span style={{
+                            fontSize: 9, color: '#555',
+                            letterSpacing: '0.1em', textTransform: 'uppercase',
+                            fontFamily: 'var(--font-inter)',
+                        }}>
                             {live ? 'live' : finished ? 'full time' : 'ko · tap'}
                         </span>
                     </div>
@@ -174,14 +198,16 @@ export default function MatchCard({ match, region }: {
                     {/* AWAY */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                         <div style={{
-                            width: 48, height: 48,
+                            width: 52, height: 52,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            background: 'var(--surface2)', borderRadius: 10, padding: 6,
+                            background: 'var(--surface2)', borderRadius: 12, padding: 6,
+                            border: '1px solid #252525',
+                            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
                         }}>
                             <Crest src={match.awayTeam.flag} alt={match.awayTeam.name} size={36} />
                         </div>
                         <span style={{
-                            fontSize: 12, fontWeight: 800,
+                            fontSize: 13, fontWeight: 800,
                             letterSpacing: '0.08em', textTransform: 'uppercase',
                             color: 'var(--text)', textAlign: 'center',
                             fontFamily: 'var(--font-barlow)',
@@ -201,7 +227,9 @@ export default function MatchCard({ match, region }: {
                     flexWrap: 'wrap',
                 }}>
                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', alignItems: 'center' }}>
-                        {channels.map(ch => <ChannelPill key={ch} name={ch} region={region} />)}
+                        {channels.map(ch => (
+                            <ChannelPill key={ch} name={ch} region={region} />
+                        ))}
                     </div>
                     <div style={{ display: 'flex', gap: 5, flexShrink: 0 }}>
                         <button onClick={shareMatch} style={{
@@ -210,6 +238,7 @@ export default function MatchCard({ match, region }: {
                             borderRadius: 5, padding: '3px 8px',
                             fontSize: 10, cursor: 'pointer',
                             color: '#25d366', fontWeight: 600,
+                            fontFamily: 'var(--font-inter)',
                         }}>
                             WA
                         </button>
@@ -220,6 +249,7 @@ export default function MatchCard({ match, region }: {
                             fontSize: 10, cursor: 'pointer',
                             color: copied ? 'var(--accent)' : '#555',
                             fontWeight: 600,
+                            fontFamily: 'var(--font-inter)',
                         }}>
                             {copied ? '✓' : '⎘'}
                         </button>
@@ -227,6 +257,7 @@ export default function MatchCard({ match, region }: {
                 </div>
             </div>
 
+            {/* Timezone dropdown */}
             {showTimes && (
                 <div style={{ marginTop: 4 }} onClick={() => setShowTimes(false)}>
                     <TimeTooltip utcDate={match.utcDate} region={region} />
