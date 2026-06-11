@@ -43,7 +43,7 @@ export default function ShareAppButton() {
                 border: '1px solid rgba(46,204,113,0.28)',
                 background: 'rgba(46,204,113,0.08)',
                 color: 'var(--accent)',
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: 800,
                 fontFamily: 'var(--font-inter)',
                 cursor: 'pointer',
