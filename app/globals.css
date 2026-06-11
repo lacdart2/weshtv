@@ -292,12 +292,12 @@ html {
 
     /* Home hero — targeted file: app/page.tsx */
     --hero-overlay: linear-gradient(90deg,
-            rgba(255, 255, 255, 0.86) 0%,
-            rgba(255, 255, 255, 0.7) 44%,
-            rgba(255, 255, 255, 0.46) 100%);
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.34) 45%,
+            rgba(255, 255, 255, 0.12) 100%);
     --hero-title: #050505;
-    --hero-subtitle: rgba(10, 10, 10, 0.7);
-    --hero-meta: rgba(10, 10, 10, 0.62);
+    --hero-subtitle: rgba(10, 10, 10, 0.82);
+    --hero-meta: rgba(10, 10, 10, 0.72);
 
     /* Match card — targeted file: components/MatchCard.tsx */
     --match-card-bg: linear-gradient(135deg, #ffffff, #f3f3f3);

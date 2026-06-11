@@ -53,21 +53,32 @@ async function fetchWeather(lat: number, lon: number, utcDate: string): Promise<
     }
 }
 
+function isRegion(value: string): value is Region {
+    return value in REGIONS
+}
+
 function detectRegionByTimezone(): Region {
     if (typeof window === 'undefined') return 'dz'
 
-    const savedRegion = localStorage.getItem('weshtv-region') as string | null
+    const savedRegion = localStorage.getItem('weshtv-region')
 
-    if (savedRegion && savedRegion in REGIONS) {
-        return savedRegion as Region
+    if (savedRegion && isRegion(savedRegion)) {
+        return savedRegion
     }
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    if (timezone === 'Europe/Oslo' && 'no' in REGIONS) return 'no'
-    if (timezone === 'Africa/Algiers' && 'dz' in REGIONS) return 'dz'
-    if (timezone === 'Africa/Tunis' && 'tn' in REGIONS) return 'tn'
-    if (timezone === 'Africa/Casablanca' && 'ma' in REGIONS) return 'ma'
+    const timezoneToRegion: Record<string, string> = {
+        'Europe/Oslo': 'no',
+        'Africa/Algiers': 'dz',
+        'Europe/Paris': 'fr',
+    }
+
+    const detectedRegion = timezoneToRegion[timezone]
+
+    if (detectedRegion && isRegion(detectedRegion)) {
+        return detectedRegion
+    }
 
     return 'dz'
 }
