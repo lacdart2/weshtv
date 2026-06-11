@@ -3,7 +3,6 @@
 import { type CSSProperties, type ReactNode, useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import type { Match } from '@/lib/matches'
-import Link from 'next/link'
 import { MOCK_MATCHES } from '@/lib/matches'
 import {
     REGIONS,
@@ -12,7 +11,7 @@ import {
     type Region,
 } from '@/lib/channels'
 import { getVenueByTeams } from '@/lib/matchVenues'
-import { Tv, MapPin, ChevronLeft, Moon, Wifi } from 'lucide-react'
+import { MapPin, ChevronLeft, Moon } from 'lucide-react'
 import { getAllTimes, isLateNight } from '@/lib/utils'
 import { getVenue } from '@/lib/venues'
 import Footer from '@/components/Footer'
@@ -187,7 +186,7 @@ export default function MatchDetailPage() {
                             <ChevronLeft size={14} /> Back
                         </button>
 
-                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                        <span style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                             {match.group?.replace(/_/g, ' ') || match.stage?.replace(/_/g, ' ')}
                         </span>
                     </>
@@ -595,22 +594,17 @@ function FlagVisual({ flag, label, side }: { flag?: string; label?: string; side
 
 function ChannelPill({ name, region }: { name: string; region: Region }) {
     const color = getChannelColor(region, name)
-    const regionData = REGIONS[region]
-    const channel = regionData.channels.find((item) => item.name === name)
+
     return (
         <div style={{
             padding: '8px 14px', borderRadius: 9,
             background: `${color}12`, border: `1px solid ${color}35`,
             display: 'flex', flexDirection: 'column', gap: 2,
         }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color, fontFamily: 'var(--font-barlow)' }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color, fontFamily: 'var(--font-barlow)' }}>
                 {name}
             </span>
-            {channel && channel.type !== 'premium' && (
-                <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: 'var(--text-muted)' }}>
-                    {channel.type === 'free' ? <><Tv size={10} /> Free to air</> : <><Wifi size={10} /> Streaming</>}
-                </span>
-            )}
+
         </div>
     )
 }
