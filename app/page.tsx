@@ -138,6 +138,7 @@ export default function Home() {
                         'url(https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&q=80)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center 45%',
+
                 }}
             >
                 {/* Dark / light overlay */}
