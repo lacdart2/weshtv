@@ -169,17 +169,25 @@ export default function MatchCard({
                         transition:
                             'transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease',
                     }}
+
                     onMouseEnter={(event) => {
-                        event.currentTarget.style.transform = 'translateY(-2px)'
+                        event.currentTarget.style.transform = 'translateY(-1px)'
                         event.currentTarget.style.boxShadow = featured
-                            ? '0 12px 36px rgba(46,204,113,0.16)'
-                            : '0 10px 28px rgba(0,0,0,0.55)'
+                            ? 'var(--match-card-featured-hover-shadow)'
+                            : 'var(--match-card-hover-shadow)'
+                        event.currentTarget.style.borderColor = featured
+                            ? 'rgba(46,204,113,0.6)'
+                            : 'var(--match-card-hover-border)'
                     }}
+
                     onMouseLeave={(event) => {
                         event.currentTarget.style.transform = 'translateY(0)'
                         event.currentTarget.style.boxShadow = featured
-                            ? '0 8px 30px rgba(46,204,113,0.1)'
+                            ? '0 4px 20px rgba(46,204,113,0.12)'
                             : 'var(--card-shadow)'
+                        event.currentTarget.style.borderColor = featured
+                            ? 'rgba(46,204,113,0.35)'
+                            : 'var(--border)'
                     }}
                 >
                     <FlagBackdrop

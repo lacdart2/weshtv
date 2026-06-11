@@ -40,6 +40,9 @@ html {
 
     /* Cards / footer */
     --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --match-card-hover-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    --match-card-hover-border: rgba(255, 255, 255, 0.12);
+    --match-card-featured-hover-shadow: 0 8px 24px rgba(46, 204, 113, 0.18);
     --footer-bg: transparent;
 
     --hero-overlay: linear-gradient(108deg,
@@ -111,6 +114,9 @@ html {
 
     /* Cards / footer */
     --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --match-card-hover-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    --match-card-hover-border: rgba(0, 0, 0, 0.25);
+    --match-card-featured-hover-shadow: 0 8px 24px rgba(26, 171, 88, 0.18);
     --footer-bg: transparent;
 
     /* Home hero — targeted file: app/page.tsx */
@@ -182,6 +188,9 @@ html {
 
     /* Cards / footer */
     --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --match-card-hover-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 0 6px 24px rgba(0, 0, 0, 0.8);
+    --match-card-hover-border: rgba(255, 255, 255, 0.12);
+    --match-card-featured-hover-shadow: 0 8px 24px rgba(46, 204, 113, 0.18);
     --footer-bg: transparent;
 
     /* Home hero — targeted file: app/page.tsx */

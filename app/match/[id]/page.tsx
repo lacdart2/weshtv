@@ -170,17 +170,6 @@ export default function MatchDetailPage() {
                 onRegionChange={handleRegionChange}
                 leftContent={
                     <>
-                        <Link href="/" style={{ textDecoration: 'none' }}>
-                            <span style={{
-                                fontWeight: 900, fontSize: 17,
-                                letterSpacing: '0.08em',
-                                fontFamily: 'var(--font-barlow)',
-                                color: 'var(--text)',
-                            }}>
-                                WESH<span style={{ color: 'var(--accent)' }}>TV</span>
-                            </span>
-                        </Link>
-
                         <button
                             onClick={() => {
                                 if (window.history.length > 1) router.back()
@@ -189,7 +178,7 @@ export default function MatchDetailPage() {
                             style={{
                                 background: 'var(--surface)',
                                 border: '1px solid var(--border)',
-                                borderRadius: 8, padding: '6px 12px',
+                                borderRadius: 8, padding: '5px 12px',
                                 color: 'var(--text)', fontSize: 13,
                                 cursor: 'pointer', display: 'flex',
                                 alignItems: 'center', gap: 6,
