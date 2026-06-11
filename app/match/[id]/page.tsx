@@ -3,6 +3,7 @@
 import { type CSSProperties, type ReactNode, useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import type { Match } from '@/lib/matches'
+import Link from 'next/link'
 import { MOCK_MATCHES } from '@/lib/matches'
 import {
     REGIONS,
@@ -90,14 +91,6 @@ export default function MatchDetailPage() {
     const [region, setRegion] = useState<Region>('dz')
 
     const id = Array.isArray(params.id) ? params.id[0] : params.id
-    useEffect(() => {
-        const timer = window.setTimeout(() => {
-            setRegion(detectRegionByTimezone())
-        }, 0)
-
-        return () => window.clearTimeout(timer)
-    }, [])
-
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -170,34 +163,6 @@ export default function MatchDetailPage() {
             background: 'var(--black)',
             display: 'flex', flexDirection: 'column',
         }}>
-            {/*    <nav style={{
-                display: 'flex', alignItems: 'center', gap: 16,
-                padding: '0 20px', height: 52,
-                borderBottom: '1px solid var(--border)',
-                position: 'sticky', top: 0,
-                background: 'var(--nav-bg)',
-                backdropFilter: 'blur(10px)', zIndex: 50,
-            }}>
-                <button
-                    onClick={() => {
-                        if (window.history.length > 1) router.back()
-                        else router.push('/')
-                    }}
-                    style={{
-                        background: 'var(--surface)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 8, padding: '6px 12px',
-                        color: 'var(--text)', fontSize: 13,
-                        cursor: 'pointer', display: 'flex',
-                        alignItems: 'center', gap: 6,
-                    }}
-                >
-                    <ChevronLeft size={14} /> Back
-                </button>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                    {match.group?.replace(/_/g, ' ') || match.stage?.replace(/_/g, ' ')}
-                </span>
-            </nav> */}
             <Navbar
                 region={region}
                 source="api"
@@ -205,6 +170,17 @@ export default function MatchDetailPage() {
                 onRegionChange={handleRegionChange}
                 leftContent={
                     <>
+                        <Link href="/" style={{ textDecoration: 'none' }}>
+                            <span style={{
+                                fontWeight: 900, fontSize: 17,
+                                letterSpacing: '0.08em',
+                                fontFamily: 'var(--font-barlow)',
+                                color: 'var(--text)',
+                            }}>
+                                WESH<span style={{ color: 'var(--accent)' }}>TV</span>
+                            </span>
+                        </Link>
+
                         <button
                             onClick={() => {
                                 if (window.history.length > 1) router.back()
@@ -213,29 +189,16 @@ export default function MatchDetailPage() {
                             style={{
                                 background: 'var(--surface)',
                                 border: '1px solid var(--border)',
-                                borderRadius: 8,
-                                padding: '6px 12px',
-                                color: 'var(--text)',
-                                fontSize: 13,
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 6,
-                                flexShrink: 0,
+                                borderRadius: 8, padding: '6px 12px',
+                                color: 'var(--text)', fontSize: 13,
+                                cursor: 'pointer', display: 'flex',
+                                alignItems: 'center', gap: 6,
                             }}
                         >
                             <ChevronLeft size={14} /> Back
                         </button>
 
-                        <span
-                            style={{
-                                fontSize: 12,
-                                color: 'var(--text-muted)',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                            }}
-                        >
+                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                             {match.group?.replace(/_/g, ' ') || match.stage?.replace(/_/g, ' ')}
                         </span>
                     </>
