@@ -24,13 +24,32 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className={`${barlow.variable} ${inter.variable}`} style={{ colorScheme: 'dark', background: '#090909' }}>
+        <html
+            lang="en"
+            suppressHydrationWarning
+            className={`${barlow.variable} ${inter.variable}`}
+        >
             <head>
-                <meta name="color-scheme" content="dark" />
+                <meta name="color-scheme" content="dark light" />
                 <meta name="theme-color" content="#090909" />
             </head>
-            <body style={{ background: '#090909', color: '#efefef' }}>
+
+            <body suppressHydrationWarning>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                try {
+                                    var theme = localStorage.getItem('weshtv-theme') || 'dark';
+                                    document.documentElement.setAttribute('data-theme', theme);
+                                } catch(e) {}
+                            })();
+                        `,
+                    }}
+                />
+
                 {children}
+
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-WWNHTMHKQV"
                     strategy="afterInteractive"
@@ -41,26 +60,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     strategy="afterInteractive"
                     dangerouslySetInnerHTML={{
                         __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-WWNHTMHKQV');
-        `,
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', 'G-WWNHTMHKQV');
+                        `,
                     }}
                 />
+
                 <Script
                     id="register-service-worker"
                     strategy="afterInteractive"
                     dangerouslySetInnerHTML={{
                         __html: `
-            if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then(() => console.log('Service Worker registered'))
-                        .catch((error) => console.log('Service Worker registration failed:', error))
-                })
-            }
-        `,
+                            if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+                                window.addEventListener('load', () => {
+                                    navigator.serviceWorker.register('/sw.js')
+                                        .then(() => console.log('Service Worker registered'))
+                                        .catch((error) => console.log('Service Worker registration failed:', error))
+                                })
+                            }
+                        `,
                     }}
                 />
             </body>

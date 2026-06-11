@@ -19,7 +19,7 @@ export default function BottomNav({
             position: 'fixed',
             bottom: 0, left: 0, right: 0,
             height: 64,
-            background: 'rgba(9,9,9,0.96)',
+            background: 'var(--bottom-nav-bg)',
             backdropFilter: 'blur(16px)',
             borderTop: '1px solid var(--border)',
             display: 'flex',
@@ -28,12 +28,11 @@ export default function BottomNav({
             zIndex: 100,
             paddingBottom: 'env(safe-area-inset-bottom)',
         }}>
-
             <Link href="/" style={{
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 4,
                 textDecoration: 'none',
-                color: path === '/' ? 'var(--accent)' : '#555',
+                color: path === '/' ? 'var(--accent)' : 'var(--text-muted)',
                 transition: 'color 0.15s',
             }}>
                 <Home size={20} />
@@ -46,7 +45,7 @@ export default function BottomNav({
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 4,
                 textDecoration: 'none',
-                color: path === '/schedule' ? 'var(--accent)' : '#555',
+                color: path === '/schedule' ? 'var(--accent)' : 'var(--text-muted)',
                 transition: 'color 0.15s',
             }}>
                 <Calendar size={20} />
@@ -62,19 +61,18 @@ export default function BottomNav({
                     alignItems: 'center', gap: 4,
                     background: 'transparent', border: 'none',
                     cursor: onRegionToggle ? 'pointer' : 'default',
-                    color: '#555',
+                    color: 'var(--text-muted)',
                 }}
             >
-                <Globe size={20} color={region === 'dz' ? '#2ecc71' : region === 'no' ? '#888' : '#555'} />
+                <Globe size={20} color={region === 'dz' ? 'var(--accent)' : region === 'no' ? 'var(--text-muted)' : 'var(--text-muted)'} />
                 <span style={{
                     fontSize: 9, fontWeight: 600,
                     letterSpacing: '0.08em', textTransform: 'uppercase',
-                    color: '#555',
+                    color: 'var(--text-muted)',
                 }}>
                     {region === 'dz' ? '🇩🇿 DZ' : region === 'no' ? '🇳🇴 NO' : 'Region'}
                 </span>
             </button>
-
         </div>
     )
 }

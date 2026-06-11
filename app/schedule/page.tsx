@@ -134,7 +134,7 @@ export default function SchedulePage() {
                     borderBottom: '1px solid var(--border)',
                     position: 'sticky',
                     top: 0,
-                    background: 'rgba(9,9,9,0.94)',
+                    background: 'var(--nav-bg)',
                     backdropFilter: 'blur(10px)',
                     zIndex: 50,
                 }}

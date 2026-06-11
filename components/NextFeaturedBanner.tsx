@@ -101,7 +101,7 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
             border: 'rgba(243,156,18,0.2)',
         },
         featured: {
-            label: `${getFeaturedFlag(match)} Next important match · ${timeUntil}`,
+            label: `${getFeaturedFlag(match)} Next important · ${timeUntil}`,
             color: 'var(--accent)',
             bg: 'rgba(46,204,113,0.06)',
             border: 'rgba(46,204,113,0.15)',
@@ -123,11 +123,14 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
             }}
         >
             {/* LEFT — label + teams */}
-            <div>
+            <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{
                     fontSize: 10, fontWeight: 600,
                     letterSpacing: '0.12em', textTransform: 'uppercase',
                     color: config.color, marginBottom: 3,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
                 }}>
                     {config.label}
                 </div>

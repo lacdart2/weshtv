@@ -44,7 +44,7 @@ export default function InstallBanner() {
             transform: 'translateX(-50%)',
             width: 'calc(100% - 32px)',
             maxWidth: 420,
-            background: '#111',
+            background: 'var(--surface)',
             border: '1px solid rgba(46,204,113,0.4)',
             borderRadius: 16,
             padding: '16px 20px',
@@ -69,7 +69,7 @@ export default function InstallBanner() {
                     <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
                         Add WESHTV to your phone
                     </div>
-                    <div style={{ fontSize: 12, color: '#888', lineHeight: 1.4 }}>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                         Matches & channels · always one tap away
                     </div>
                 </div>
@@ -82,9 +82,9 @@ export default function InstallBanner() {
                     style={{
                         flex: 1, padding: '10px',
                         borderRadius: 10,
-                        border: '1px solid #333',
+                        border: '1px solid var(--border)',
                         background: 'transparent',
-                        color: '#999', fontSize: 13,
+                        color: 'var(--text-muted)', fontSize: 13,
                         cursor: 'pointer',
                         fontFamily: 'var(--font-inter)',
                     }}

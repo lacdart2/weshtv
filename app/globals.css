@@ -1,5 +1,5 @@
 html {
-    color-scheme: dark;
+    color-scheme: dark light;
 }
 
 :root {
@@ -14,6 +14,112 @@ html {
     --text: #efefef;
     --text-dim: #999999;
     --text-muted: #666666;
+    --logo-text: #efefef;
+    --nav-bg: rgba(9, 9, 9, 0.94);
+    --nav-button-bg: transparent;
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --hero-overlay: rgba(9, 9, 9, 0.78);
+    --footer-bg: transparent;
+    --bottom-nav-bg: rgba(9, 9, 9, 0.94);
+    --match-card-bg: linear-gradient(135deg, var(--surface), #080808);
+    --match-card-featured-bg: linear-gradient(135deg, rgba(46, 204, 113, 0.08), var(--surface) 45%, #080808);
+    --match-card-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.75));
+    --match-card-footer-bg: rgba(8, 8, 8, 0.82);
+    --match-glass-bg: rgba(15, 15, 15, 0.78);
+    --match-glass-border: rgba(255, 255, 255, 0.08);
+    --match-watermark: rgba(255, 255, 255, 0.04);
+    --match-muted: #777;
+    --detail-hero-bg-opacity: 0.18;
+    --detail-flag-opacity: 0.16;
+    --detail-emoji-flag-opacity: 0.12;
+    --detail-hero-border: rgba(46, 204, 113, 0.36);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.06),
+            rgba(0, 0, 0, 0.22));
+    --detail-subtext: #cfcfcf;
+    --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    --detail-team-label-bg: rgba(10, 10, 10, 0.28);
+    --detail-team-label-border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+    --black: #f4f4f4;
+    --surface: #ffffff;
+    --surface2: #eeeeee;
+    --border: #dddddd;
+    --accent: #1aab58;
+    --accent-dim: rgba(26, 171, 88, 0.1);
+    --accent-mid: rgba(26, 171, 88, 0.24);
+    --red: #cc2200;
+    --text: #0a0a0a;
+    --text-dim: #333333;
+    --text-muted: #666666;
+    --logo-text: #111111;
+    --nav-bg: rgba(255, 255, 255, 0.96);
+    --nav-button-bg: rgba(255, 255, 255, 0.75);
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --hero-overlay: rgba(244, 244, 244, 0.58);
+    --footer-bg: transparent;
+    --bottom-nav-bg: rgba(255, 255, 255, 0.96);
+    --match-card-bg: linear-gradient(135deg, #ffffff, #f3f3f3);
+    --match-card-featured-bg: linear-gradient(135deg, rgba(26, 171, 88, 0.1), #ffffff 48%, #f1f1f1);
+    --match-card-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.42) 55%, rgba(255, 255, 255, 0.78));
+    --match-card-footer-bg: rgba(255, 255, 255, 0.86);
+    --match-glass-bg: rgba(255, 255, 255, 0.78);
+    --match-glass-border: rgba(0, 0, 0, 0.08);
+    --match-watermark: rgba(0, 0, 0, 0.035);
+    --match-muted: #666666;
+    --detail-hero-bg-opacity: 0.72;
+    --detail-flag-opacity: 0.46;
+    --detail-emoji-flag-opacity: 0.36;
+    --detail-hero-border: rgba(26, 171, 88, 0.9);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.14));
+    --detail-subtext: #333333;
+    --detail-text-shadow: 0 1px 10px rgba(255, 255, 255, 0.9);
+    --detail-team-label-bg: rgba(255, 255, 255, 0.62);
+    --detail-team-label-border: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+    --black: #090909;
+    --surface: #131313;
+    --surface2: #1c1c1c;
+    --border: #1f1f1f;
+    --accent: #2ecc71;
+    --accent-dim: rgba(46, 204, 113, 0.08);
+    --accent-mid: rgba(46, 204, 113, 0.18);
+    --red: #e74c3c;
+    --text: #efefef;
+    --text-dim: #999999;
+    --text-muted: #666666;
+    --logo-text: #efefef;
+    --nav-bg: rgba(9, 9, 9, 0.94);
+    --nav-button-bg: transparent;
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --hero-overlay: rgba(9, 9, 9, 0.78);
+    --footer-bg: transparent;
+    --bottom-nav-bg: rgba(9, 9, 9, 0.94);
+    --match-card-bg: linear-gradient(135deg, var(--surface), #080808);
+    --match-card-featured-bg: linear-gradient(135deg, rgba(46, 204, 113, 0.08), var(--surface) 45%, #080808);
+    --match-card-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.75));
+    --match-card-footer-bg: rgba(8, 8, 8, 0.82);
+    --match-glass-bg: rgba(15, 15, 15, 0.78);
+    --match-glass-border: rgba(255, 255, 255, 0.08);
+    --match-watermark: rgba(255, 255, 255, 0.04);
+    --match-muted: #777;
+    --detail-hero-bg-opacity: 0.18;
+    --detail-flag-opacity: 0.16;
+    --detail-emoji-flag-opacity: 0.12;
+    --detail-hero-border: rgba(46, 204, 113, 0.36);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.06),
+            rgba(0, 0, 0, 0.22));
+    --detail-subtext: #cfcfcf;
+    --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    --detail-team-label-bg: rgba(10, 10, 10, 0.28);
+    --detail-team-label-border: rgba(255, 255, 255, 0.08);
 }
 
 *, *::before, *::after {
@@ -26,9 +132,10 @@ html {
     scroll-behavior: smooth;
 }
 
-html, body {
-    background: #090909 !important;
-    color: #efefef;
+html,
+body {
+    background: var(--black);
+    color: var(--text);
     font-family: var(--font-inter), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
 }

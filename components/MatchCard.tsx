@@ -97,7 +97,7 @@ export default function MatchCard({
                         bottom: -18,
                         fontSize: 72,
                         fontWeight: 900,
-                        color: 'rgba(255,255,255,0.035)',
+                        color: 'var(--match-watermark)',
                         fontFamily: 'var(--font-barlow)',
                         lineHeight: 1,
                     }}
@@ -110,7 +110,7 @@ export default function MatchCard({
                         style={{
                             fontSize: 10,
                             fontWeight: 600,
-                            color: '#555',
+                            color: 'var(--text-muted)',
                             textTransform: 'uppercase',
                             letterSpacing: '0.08em',
                             marginBottom: 3,
@@ -119,7 +119,7 @@ export default function MatchCard({
                         {match.stage?.replace(/_/g, ' ')}
                     </div>
 
-                    <div style={{ fontSize: 12, color: '#444' }}>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                         Teams TBD — depends on group stage
                     </div>
                 </div>
@@ -153,8 +153,8 @@ export default function MatchCard({
                 <div
                     style={{
                         background: featured
-                            ? 'linear-gradient(135deg, rgba(46,204,113,0.08), var(--surface) 45%, #080808)'
-                            : 'linear-gradient(135deg, var(--surface), #080808)',
+                            ? 'var(--match-card-featured-bg)'
+                            : 'var(--match-card-bg)',
                         border: featured
                             ? '1px solid rgba(46,204,113,0.35)'
                             : live
@@ -165,7 +165,7 @@ export default function MatchCard({
                         position: 'relative',
                         boxShadow: featured
                             ? '0 8px 30px rgba(46,204,113,0.1)'
-                            : '0 2px 14px rgba(0,0,0,0.45)',
+                            : 'var(--card-shadow)',
                         transition:
                             'transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease',
                     }}
@@ -179,7 +179,7 @@ export default function MatchCard({
                         event.currentTarget.style.transform = 'translateY(0)'
                         event.currentTarget.style.boxShadow = featured
                             ? '0 8px 30px rgba(46,204,113,0.1)'
-                            : '0 2px 14px rgba(0,0,0,0.45)'
+                            : 'var(--card-shadow)'
                     }}
                 >
                     <FlagBackdrop
@@ -198,7 +198,7 @@ export default function MatchCard({
                             zIndex: 1,
                             fontSize: 86,
                             fontWeight: 900,
-                            color: 'rgba(255,255,255,0.04)',
+                            color: 'var(--match-watermark)',
                             fontFamily: 'var(--font-barlow)',
                             lineHeight: 1,
                             letterSpacing: '-0.05em',
@@ -214,8 +214,7 @@ export default function MatchCard({
                             position: 'absolute',
                             inset: 0,
                             zIndex: 1,
-                            background:
-                                'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42) 55%, rgba(0,0,0,0.75))',
+                            background: 'var(--match-card-overlay)',
                             pointerEvents: 'none',
                         }}
                     />
@@ -246,7 +245,7 @@ export default function MatchCard({
                         <span
                             style={{
                                 fontSize: 10,
-                                color: '#777',
+                                color: 'var(--match-muted)',
                                 letterSpacing: '0.06em',
                                 textTransform: 'uppercase',
                                 fontFamily: 'var(--font-inter)',
@@ -331,10 +330,10 @@ export default function MatchCard({
                                 style={{
                                     background: showTimes
                                         ? 'var(--accent-dim)'
-                                        : 'rgba(15,15,15,0.85)',
+                                        : 'var(--match-glass-bg)',
                                     border: showTimes
-                                        ? '1px solid rgba(46,204,113,0.45)'
-                                        : '1px solid rgba(255,255,255,0.08)',
+                                        ? '1px solid var(--accent-mid)'
+                                        : '1px solid var(--match-glass-border)',
                                     borderRadius: 8,
                                     padding: '6px 14px',
                                     cursor: 'pointer',
@@ -409,8 +408,8 @@ export default function MatchCard({
                             justifyContent: 'space-between',
                             padding: '8px 14px 10px',
                             gap: 8,
-                            borderTop: '1px solid rgba(255,255,255,0.06)',
-                            background: 'rgba(8,8,8,0.82)',
+                            borderTop: '1px solid var(--border)',
+                            background: 'var(--match-card-footer-bg)',
                             flexWrap: 'wrap',
                             backdropFilter: 'blur(10px)',
                         }}
@@ -478,7 +477,7 @@ export default function MatchCard({
                                     padding: '3px 8px',
                                     fontSize: 10,
                                     cursor: 'pointer',
-                                    color: copied ? 'var(--accent)' : '#777',
+                                    color: copied ? 'var(--accent)' : 'var(--match-muted)',
                                     fontWeight: 600,
                                     fontFamily: 'var(--font-inter)',
                                 }}
@@ -527,10 +526,10 @@ function TeamBlock({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'rgba(15,15,15,0.78)',
+                    background: 'var(--match-glass-bg)',
                     borderRadius: 13,
                     padding: 6,
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    border: '1px solid var(--match-glass-border)',
                     boxShadow:
                         'inset 0 1px 0 rgba(255,255,255,0.06), 0 6px 18px rgba(0,0,0,0.35)',
                     backdropFilter: 'blur(8px)',
