@@ -16,13 +16,13 @@ export function formatKickoff(utcDate: string, region: Region): string {
     })
 }
 
-// Format the US local time (where the match physically happens)
+// Format the US Eastern time in 24-hour format
 export function formatUSTime(utcDate: string): string {
-    return new Date(utcDate).toLocaleTimeString('en-US', {
+    return new Date(utcDate).toLocaleTimeString('fr-FR', {
         hour: '2-digit',
         minute: '2-digit',
         timeZone: 'America/New_York',
-        hour12: true,
+        hour12: false,
     })
 }
 
@@ -40,8 +40,12 @@ export function getAllTimes(utcDate: string, userRegion: Region): TimeDisplay {
     const date = new Date(utcDate)
 
     const get = (tz: string) =>
-        date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: tz })
-
+        date.toLocaleTimeString('fr-FR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: tz,
+            hour12: false,
+        })
     // Check if local date differs from UTC date (next day problem)
     const utcDay = date.getUTCDate()
     const localDay = new Date(date.toLocaleString('en-US', { timeZone: TIMEZONES[userRegion] })).getDate()

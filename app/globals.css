@@ -1,4 +1,4 @@
-html {
+/* html {
     color-scheme: dark light;
 }
 
@@ -164,6 +164,297 @@ span, p, div {
 
 @keyframes livepulse {
     0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.font-display {
+    font-family: var(--font-barlow), system-ui, sans-serif;
+} */
+html {
+    color-scheme: dark light;
+}
+
+/* =========================================================
+   GLOBAL THEME VARIABLES
+   Targeted files:
+   - app/page.tsx
+   - app/match/[id]/page.tsx
+   - app/schedule/page.tsx
+   - components/Navbar.tsx
+   - components/Footer.tsx
+   - components/BottomNav.tsx
+   - components/MatchCard.tsx
+========================================================= */
+
+:root {
+    /* Base layout */
+    --black: #090909;
+    --surface: #131313;
+    --surface2: #1c1c1c;
+    --border: #1f1f1f;
+
+    /* Brand */
+    --accent: #2ecc71;
+    --accent-dim: rgba(46, 204, 113, 0.08);
+    --accent-mid: rgba(46, 204, 113, 0.18);
+    --red: #e74c3c;
+
+    /* Text */
+    --text: #efefef;
+    --text-dim: #999999;
+    --text-muted: #666666;
+    --logo-text: #efefef;
+
+    /* Navigation */
+    --nav-bg: rgba(9, 9, 9, 0.94);
+    --nav-button-bg: transparent;
+    --bottom-nav-bg: rgba(9, 9, 9, 0.94);
+
+    /* Cards / footer */
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --footer-bg: transparent;
+
+    /* Home hero — targeted file: app/page.tsx */
+    --hero-overlay: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.68) 0%,
+            rgba(255, 255, 255, 0.46) 45%,
+            rgba(255, 255, 255, 0.22) 100%);
+    --hero-title: #050505;
+    --hero-subtitle: rgba(10, 10, 10, 0.78);
+    --hero-meta: rgba(10, 10, 10, 0.68);
+
+    /* Match card — targeted file: components/MatchCard.tsx */
+    --match-card-bg: linear-gradient(135deg, var(--surface), #080808);
+    --match-card-featured-bg: linear-gradient(135deg,
+            rgba(46, 204, 113, 0.08),
+            var(--surface) 45%,
+            #080808);
+    --match-card-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.08),
+            rgba(0, 0, 0, 0.42) 55%,
+            rgba(0, 0, 0, 0.75));
+    --match-card-footer-bg: rgba(8, 8, 8, 0.82);
+    --match-glass-bg: rgba(15, 15, 15, 0.78);
+    --match-glass-border: rgba(255, 255, 255, 0.08);
+    --match-watermark: rgba(255, 255, 255, 0.04);
+    --match-muted: #777777;
+
+    /* Match detail hero — targeted file: app/match/[id]/page.tsx */
+    --detail-hero-bg-opacity: 0.18;
+    --detail-flag-opacity: 0.16;
+    --detail-emoji-flag-opacity: 0.12;
+    --detail-hero-border: rgba(46, 204, 113, 0.36);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.06),
+            rgba(0, 0, 0, 0.22));
+    --detail-subtext: #cfcfcf;
+    --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    --detail-team-label-bg: rgba(10, 10, 10, 0.28);
+    --detail-team-label-border: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+[data-theme="light"] {
+    /* Base layout */
+    --black: #f4f4f4;
+    --surface: #ffffff;
+    --surface2: #eeeeee;
+    --border: #dddddd;
+
+    /* Brand */
+    --accent: #1aab58;
+    --accent-dim: rgba(26, 171, 88, 0.1);
+    --accent-mid: rgba(26, 171, 88, 0.24);
+    --red: #cc2200;
+
+    /* Text */
+    --text: #0a0a0a;
+    --text-dim: #333333;
+    --text-muted: #666666;
+    --logo-text: #111111;
+
+    /* Navigation */
+    --nav-bg: rgba(255, 255, 255, 0.96);
+    --nav-button-bg: rgba(255, 255, 255, 0.75);
+    --bottom-nav-bg: rgba(255, 255, 255, 0.96);
+
+    /* Cards / footer */
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --footer-bg: transparent;
+
+    /* Home hero — targeted file: app/page.tsx */
+    --hero-overlay: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.86) 0%,
+            rgba(255, 255, 255, 0.7) 44%,
+            rgba(255, 255, 255, 0.46) 100%);
+    --hero-title: #050505;
+    --hero-subtitle: rgba(10, 10, 10, 0.7);
+    --hero-meta: rgba(10, 10, 10, 0.62);
+
+    /* Match card — targeted file: components/MatchCard.tsx */
+    --match-card-bg: linear-gradient(135deg, #ffffff, #f3f3f3);
+    --match-card-featured-bg: linear-gradient(135deg,
+            rgba(26, 171, 88, 0.1),
+            #ffffff 48%,
+            #f1f1f1);
+    --match-card-overlay: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.42) 55%,
+            rgba(255, 255, 255, 0.78));
+    --match-card-footer-bg: rgba(255, 255, 255, 0.86);
+    --match-glass-bg: rgba(255, 255, 255, 0.78);
+    --match-glass-border: rgba(0, 0, 0, 0.08);
+    --match-watermark: rgba(0, 0, 0, 0.035);
+    --match-muted: #666666;
+
+    /* Match detail hero — targeted file: app/match/[id]/page.tsx */
+    --detail-hero-bg-opacity: 0.72;
+    --detail-flag-opacity: 0.46;
+    --detail-emoji-flag-opacity: 0.36;
+    --detail-hero-border: rgba(26, 171, 88, 0.9);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.14));
+    --detail-subtext: #333333;
+    --detail-text-shadow: 0 1px 10px rgba(255, 255, 255, 0.9);
+    --detail-team-label-bg: rgba(255, 255, 255, 0.62);
+    --detail-team-label-border: rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] {
+    /* Base layout */
+    --black: #090909;
+    --surface: #131313;
+    --surface2: #1c1c1c;
+    --border: #1f1f1f;
+
+    /* Brand */
+    --accent: #2ecc71;
+    --accent-dim: rgba(46, 204, 113, 0.08);
+    --accent-mid: rgba(46, 204, 113, 0.18);
+    --red: #e74c3c;
+
+    /* Text */
+    --text: #efefef;
+    --text-dim: #999999;
+    --text-muted: #666666;
+    --logo-text: #efefef;
+
+    /* Navigation */
+    --nav-bg: rgba(9, 9, 9, 0.94);
+    --nav-button-bg: transparent;
+    --bottom-nav-bg: rgba(9, 9, 9, 0.94);
+
+    /* Cards / footer */
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --footer-bg: transparent;
+
+    /* Home hero — targeted file: app/page.tsx */
+    --hero-overlay: linear-gradient(90deg,
+            rgba(9, 9, 9, 0.92) 0%,
+            rgba(9, 9, 9, 0.78) 42%,
+            rgba(9, 9, 9, 0.65) 100%);
+    --hero-title: #ffffff;
+    --hero-subtitle: rgba(255, 255, 255, 0.78);
+    --hero-meta: rgba(255, 255, 255, 0.66);
+
+    /* Match card — targeted file: components/MatchCard.tsx */
+    --match-card-bg: linear-gradient(135deg, var(--surface), #080808);
+    --match-card-featured-bg: linear-gradient(135deg,
+            rgba(46, 204, 113, 0.08),
+            var(--surface) 45%,
+            #080808);
+    --match-card-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.08),
+            rgba(0, 0, 0, 0.42) 55%,
+            rgba(0, 0, 0, 0.75));
+    --match-card-footer-bg: rgba(8, 8, 8, 0.82);
+    --match-glass-bg: rgba(15, 15, 15, 0.78);
+    --match-glass-border: rgba(255, 255, 255, 0.08);
+    --match-watermark: rgba(255, 255, 255, 0.04);
+    --match-muted: #777777;
+
+    /* Match detail hero — targeted file: app/match/[id]/page.tsx */
+    --detail-hero-bg-opacity: 0.18;
+    --detail-flag-opacity: 0.16;
+    --detail-emoji-flag-opacity: 0.12;
+    --detail-hero-border: rgba(46, 204, 113, 0.36);
+    --detail-hero-overlay: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.06),
+            rgba(0, 0, 0, 0.22));
+    --detail-subtext: #cfcfcf;
+    --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    --detail-team-label-bg: rgba(10, 10, 10, 0.28);
+    --detail-team-label-border: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   RESET / GLOBAL BASE
+========================================================= */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    color: var(--text);
+}
+
+span,
+p,
+div {
+    color: inherit;
+}
+
+/* =========================================================
+   ANIMATIONS / UTILITIES
+========================================================= */
+
+@keyframes livepulse {
+
+    0%,
+    100% {
         opacity: 1;
     }
 

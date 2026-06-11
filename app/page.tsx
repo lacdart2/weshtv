@@ -12,7 +12,6 @@ import MatchCard from '@/components/MatchCard'
 import BottomNav from '@/components/BottomNav'
 import Footer from '@/components/Footer'
 import ShareAppButton from '@/components/ShareAppButton'
-//import ThemeToggle from '@/components/ThemeToggle'
 import Navbar from '@/components/NavBar'
 
 const WORLD_CUP_START = '2026-06-11'
@@ -127,83 +126,125 @@ export default function Home() {
             )}
 
             {/* HERO */}
-            <div style={{
-                padding: '20px 20px 18px',
-                borderBottom: '1px solid var(--border)',
-                position: 'relative',
-                overflow: 'hidden',
-                backgroundImage: 'url(https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&q=80)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center 30%',
-            }}>
-                {/* Dark overlay */}
-                <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'var(--hero-overlay)',
-                    zIndex: 0, pointerEvents: 'none',
-                }} />
+            <div
+                style={{
+                    minHeight: 220,
+                    padding: '34px 20px 28px',
+                    borderBottom: '1px solid var(--border)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    backgroundImage:
+                        'url(https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&q=80)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center 38%',
+                }}
+            >
+                {/* Dark / light overlay */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'var(--hero-overlay)',
+                        zIndex: 0,
+                        pointerEvents: 'none',
+                    }}
+                />
 
-                <div style={{ position: 'relative', zIndex: 1 }}>
+                <div
+                    style={{
+                        position: 'relative',
+                        zIndex: 1,
+                        maxWidth: 920,
+                    }}
+                >
                     {/* Title */}
-                    <div style={{
-                        fontFamily: 'var(--font-barlow)',
-                        fontWeight: 900,
-                        textTransform: 'uppercase',
-                        lineHeight: 1,
-                        letterSpacing: '-0.01em',
-                        marginBottom: 10,
-                    }}>
-                        <span style={{
-                            fontSize: 'clamp(42px, 8vw, 72px)',
-                            color: 'var(--text)',
-                            display: 'inline',
-                        }}>
-                            Wesh,{' '}
+                    <div
+                        style={{
+                            fontFamily: 'var(--font-barlow)',
+                            fontWeight: 900,
+                            textTransform: 'uppercase',
+                            lineHeight: 1,
+                            letterSpacing: '-0.01em',
+                            marginBottom: 18,
+                            maxWidth: 820,
+                        }}
+                    >
+                        <span
+                            style={{
+                                fontSize: 'clamp(38px, 11vw, 72px)',
+                                color: 'var(--hero-title)',
+                                display: 'block',
+                                lineHeight: 0.9,
+                                marginBottom: 10,
+                                textShadow: '0 2px 18px rgba(0,0,0,0.22)',
+                            }}
+                        >
+                            Wesh,
                         </span>
-                        <span style={{
-                            fontSize: 'clamp(13px, 2vw, 18px)',
-                            display: 'inline',
-                            fontFamily: 'var(--font-inter)',
-                            fontWeight: 300,
-                            letterSpacing: '0.01em',
-                            color: 'var(--text-muted)',
-                            textTransform: 'none',
-                        }}>
+
+                        <span
+                            style={{
+                                fontSize: 'clamp(18px, 4.6vw, 30px)',
+                                display: 'block',
+                                fontFamily: 'var(--font-inter)',
+                                fontWeight: 600,
+                                letterSpacing: '0.01em',
+                                color: 'var(--hero-subtitle)',
+                                textTransform: 'none',
+                                lineHeight: 1.35,
+                                maxWidth: 820,
+                                textShadow: '0 1px 12px rgba(0,0,0,0.16)',
+                            }}
+                        >
                             c&apos;est sur quelle{' '}
-                            <span style={{
-                                fontFamily: 'var(--font-barlow)',
-                                fontWeight: 900,
-                                fontSize: 'clamp(16px, 2.8vw, 26px)',
-                                color: 'var(--accent)',
-                                letterSpacing: '0.04em',
-                                textTransform: 'uppercase',
-                            }}>
+                            <span
+                                style={{
+                                    fontFamily: 'var(--font-barlow)',
+                                    fontWeight: 900,
+                                    color: 'var(--accent)',
+                                    letterSpacing: '0.04em',
+                                    textTransform: 'uppercase',
+                                }}
+                            >
                                 chaîne
-                            </span>
-                            {' '}et à quelle{' '}
-                            <span style={{
-                                fontFamily: 'var(--font-barlow)',
-                                fontWeight: 900,
-                                fontSize: 'clamp(16px, 2.8vw, 26px)',
-                                color: 'var(--accent)',
-                                opacity: 0.6,
-                                letterSpacing: '0.04em',
-                                textTransform: 'uppercase',
-                            }}>
+                            </span>{' '}
+                            et à quelle{' '}
+                            <span
+                                style={{
+                                    fontFamily: 'var(--font-barlow)',
+                                    fontWeight: 900,
+                                    color: 'var(--accent)',
+                                    letterSpacing: '0.04em',
+                                    textTransform: 'uppercase',
+                                }}
+                            >
                                 heure?
                             </span>
                         </span>
                     </div>
 
-                    {/* Meta row — compact single line */}
-                    <div style={{
-                        display: 'flex', alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap', gap: 8,
-                    }}>
-                        <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-inter)' }}>
+                    {/* Meta row */}
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: 12,
+                        }}
+                    >
+                        <span
+                            style={{
+                                fontSize: 12,
+                                color: 'var(--hero-meta)',
+                                fontFamily: 'var(--font-inter)',
+                                fontWeight: 500,
+                                textShadow: '0 1px 10px rgba(0,0,0,0.12)',
+                            }}
+                        >
                             48 teams · 104 matches · Jun 11 – Jul 19 🇺🇸🇨🇦🇲🇽
                         </span>
+
                         <ShareAppButton />
                     </div>
                 </div>
