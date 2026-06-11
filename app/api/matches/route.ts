@@ -4,28 +4,52 @@ import { MOCK_MATCHES } from '@/lib/matches'
 import type { Match } from '@/lib/matches'
 
 // Map API shape → our internal Match type
+
+type APIMatchWithExtraStats = Awaited<ReturnType<typeof getWorldCupMatches>>[0] & {
+    minute?: number | null
+    score: Awaited<ReturnType<typeof getWorldCupMatches>>[0]['score'] & {
+        halfTime?: {
+            home: number | null
+            away: number | null
+        } | null
+        duration?: 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT' | string | null
+    }
+}
 function mapToMatch(m: Awaited<ReturnType<typeof getWorldCupMatches>>[0]): Match {
+    const apiMatch = m as APIMatchWithExtraStats
+
     return {
-        id: m.id,
-        utcDate: m.utcDate,
-        status: m.status as Match['status'],
-        stage: m.stage,
-        group: m.group ?? undefined,
-        venue: m.venue ?? 'TBC',
+        id: apiMatch.id,
+        utcDate: apiMatch.utcDate,
+        status: apiMatch.status as Match['status'],
+        stage: apiMatch.stage,
+        group: apiMatch.group ?? undefined,
+        venue: apiMatch.venue ?? 'TBC',
         homeTeam: {
-            name: m.homeTeam.name,
-            short: m.homeTeam.tla,
-            flag: m.homeTeam.crest,
+            name: apiMatch.homeTeam.name,
+            short: apiMatch.homeTeam.tla,
+            flag: apiMatch.homeTeam.crest,
         },
         awayTeam: {
-            name: m.awayTeam.name,
-            short: m.awayTeam.tla,
-            flag: m.awayTeam.crest,
+            name: apiMatch.awayTeam.name,
+            short: apiMatch.awayTeam.tla,
+            flag: apiMatch.awayTeam.crest,
         },
         score: {
-            home: m.score.fullTime.home,
-            away: m.score.fullTime.away,
+            home: apiMatch.score.fullTime.home,
+            away: apiMatch.score.fullTime.away,
         },
+        minute: apiMatch.minute ?? undefined,
+        halfTime: {
+            home: apiMatch.score.halfTime?.home ?? null,
+            away: apiMatch.score.halfTime?.away ?? null,
+        },
+        duration:
+            apiMatch.score.duration === 'REGULAR' ||
+                apiMatch.score.duration === 'EXTRA_TIME' ||
+                apiMatch.score.duration === 'PENALTY_SHOOTOUT'
+                ? apiMatch.score.duration
+                : undefined,
     }
 }
 

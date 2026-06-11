@@ -10,6 +10,10 @@ export interface Match {
     homeTeam: { name: string; short: string; flag: string }
     awayTeam: { name: string; short: string; flag: string }
     score: { home: number | null; away: number | null }
+    // new fields
+    minute?: number
+    halfTime?: { home: number | null; away: number | null }
+    duration?: 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT' | null
 }
 
 // Build UTC date string — hour is UTC

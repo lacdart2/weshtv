@@ -23,7 +23,14 @@ interface Weather {
     condition: string
     icon: string
 }
-
+type MatchWithStats = Match & {
+    minute?: number | null
+    halfTime?: {
+        home: number | null
+        away: number | null
+    } | null
+    duration?: 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT' | string | null
+}
 async function fetchWeather(lat: number, lon: number, utcDate: string): Promise<Weather | null> {
     try {
         const date = utcDate.split('T')[0]
@@ -149,7 +156,7 @@ export default function MatchDetailPage() {
     const live = match.status === 'IN_PLAY' || match.status === 'PAUSED'
     const finished = match.status === 'FINISHED'
     const hasScore = match.score.home !== null
-
+    const matchStats = match as MatchWithStats
     const timeRows = [
         { flag: '🇩🇿', label: 'Algeria', time: t.dz },
         { flag: '🇳🇴', label: 'Norway', time: t.no },
@@ -399,6 +406,79 @@ export default function MatchDetailPage() {
                             ))}
                         </div>
                     </Card>
+
+                    {/* MATCH STATS — only live or finished */}
+                    {(live || finished) && (
+                        <Card title="Match info">
+                            <div style={{ display: 'grid', gap: 8 }}>
+
+                                {/* Match minute — live only */}
+                                {live && matchStats.minute && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '10px 12px',
+                                        borderRadius: 10,
+                                        background: 'rgba(231,76,60,0.06)',
+                                        border: '1px solid rgba(231,76,60,0.2)',
+                                    }}>
+                                        <span style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 8,
+                                            fontSize: 13,
+                                            color: 'var(--red)',
+                                            fontWeight: 600,
+                                        }}>
+                                            ● Live
+                                        </span>
+
+                                        <strong style={{
+                                            color: 'var(--red)',
+                                            fontSize: 16,
+                                            fontFamily: 'var(--font-barlow)',
+                                            fontVariantNumeric: 'tabular-nums',
+                                        }}>
+                                            {matchStats.minute}&apos;
+                                        </strong>
+                                    </div>
+                                )}
+
+                                {/* Half time score */}
+                                {matchStats.halfTime?.home !== null &&
+                                    matchStats.halfTime?.home !== undefined &&
+                                    matchStats.halfTime?.away !== null &&
+                                    matchStats.halfTime?.away !== undefined && (
+                                        <InfoRow
+                                            label="Half time"
+                                            value={`${matchStats.halfTime.home} : ${matchStats.halfTime.away}`}
+                                        />
+                                    )}
+
+                                {/* Duration — extra time or penalties */}
+                                {finished && matchStats.duration && matchStats.duration !== 'REGULAR' && (
+                                    <InfoRow
+                                        label="Decided by"
+                                        value={
+                                            matchStats.duration === 'EXTRA_TIME'
+                                                ? 'Extra time'
+                                                : 'Penalties'
+                                        }
+                                    />
+                                )}
+
+                                {/* Full time result */}
+                                {finished && (
+                                    <InfoRow
+                                        label="Full time"
+                                        value={`${match.score.home} : ${match.score.away}`}
+                                    />
+                                )}
+                            </div>
+                        </Card>
+                    )}
+
                     <Card title="Location">
                         {venue ? (
                             <div style={{ display: 'grid', gap: 8 }}>
