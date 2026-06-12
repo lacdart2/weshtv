@@ -51,13 +51,26 @@ function TeamName({ code }: { code?: string }) {
     if (!code) return <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>TBD</span>
     const flag = getTeamFlag(code)
     return (
-        <span style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 0, overflow: 'hidden' }}>
-            {flag && <span style={{ fontSize: 14, flexShrink: 0 }}>{flag}</span>}
+        <span style={{
+            display: 'inline-flex', alignItems: 'center',
+            gap: 5, minWidth: 0, overflow: 'hidden',
+            lineHeight: 1,
+        }}>
+            {flag && (
+                <span style={{
+                    fontSize: 18, flexShrink: 0,
+                    display: 'inline-flex', alignItems: 'center',
+                    lineHeight: 1,
+                }}>
+                    {flag}
+                </span>
+            )}
             <span style={{
                 fontSize: 14, fontWeight: 800,
                 textTransform: 'uppercase', letterSpacing: '0.05em',
                 color: 'var(--text)', fontFamily: 'var(--font-barlow)',
                 overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                lineHeight: 1,
             }}>
                 {code}
             </span>

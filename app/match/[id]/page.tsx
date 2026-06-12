@@ -563,70 +563,64 @@ export default function MatchDetailPage() {
 }
 
 function TeamHero({ flag, name, shortName }: { flag?: string; name?: string; shortName?: string }) {
+    const isImage = flag?.startsWith('http')
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, minWidth: 0 }}>
+        <div style={{
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            gap: 10, minWidth: 0,
+        }}>
+            {/* Flag */}
+            {isImage ? (
+                <div style={{
+                    width: 80, height: 80,
+                    background: 'var(--surface2)',
+                    borderRadius: 20,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: '1px solid var(--border)',
+                    padding: 10,
+                }}>
+                    <img src={flag} alt={name ?? ''} style={{ width: 58, height: 58, objectFit: 'contain', display: 'block' }} />
+                </div>
+            ) : (
+                <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 72, lineHeight: 1,
+                }}>
+                    {flag ?? '🏳️'}
+                </div>
+            )}
+
+            {/* Name label */}
             <div style={{
-                width: 82, height: 82,
-                background: 'var(--surface2)',
-                borderRadius: 20,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: '1px solid var(--border)',
-                padding: 10,
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center',
+                textAlign: 'center', minWidth: 0,
+                padding: '6px 10px', borderRadius: 12,
+                background: 'var(--detail-team-label-bg)',
+                border: '1px solid var(--detail-team-label-border)',
+                backdropFilter: 'blur(8px)',
             }}>
-                <Crest src={flag} alt={name ?? 'Team flag'} size={58} />
-            </div>
-            <div
-                style={{
-                    textAlign: 'center',
-                    minWidth: 0,
-                    padding: '6px 10px',
-                    borderRadius: 12,
-                    background: 'var(--detail-team-label-bg)',
-                    border: '1px solid var(--detail-team-label-border)',
-                    backdropFilter: 'blur(8px)',
-                }}
-            >
-                <div
-                    style={{
-                        fontSize: 22,
-                        fontWeight: 900,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        color: 'var(--text)',
-                        fontFamily: 'var(--font-barlow)',
-                        textShadow: 'var(--detail-text-shadow)',
-                    }}
-                >
+                <div style={{
+                    fontSize: 22, fontWeight: 900,
+                    textTransform: 'uppercase', letterSpacing: '0.06em',
+                    color: 'var(--text)', fontFamily: 'var(--font-barlow)',
+                    textShadow: 'var(--detail-text-shadow)',
+                }}>
                     {shortName || 'TBD'}
                 </div>
-
-                <div
-                    style={{
-                        fontSize: 12,
-                        color: 'var(--detail-subtext)',
-                        marginTop: 3,
-                        maxWidth: 120,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        textShadow: 'var(--detail-text-shadow)',
-                    }}
-                >
+                <div style={{
+                    fontSize: 12, color: 'var(--detail-subtext)',
+                    marginTop: 3, maxWidth: 120,
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    textShadow: 'var(--detail-text-shadow)',
+                }}>
                     {name || 'To be decided'}
                 </div>
             </div>
         </div>
     )
 }
-
-function Crest({ src, alt, size }: { src?: string; alt: string; size: number }) {
-    if (!src) return <span style={{ fontSize: size * 0.42 }}>TBD</span>
-    if (src.startsWith('http')) {
-        return <img src={src} alt={alt} style={{ width: size, height: size, objectFit: 'contain', display: 'block' }} />
-    }
-    return <span style={{ fontSize: size * 0.8 }}>{src}</span>
-}
-
 function FlagBackdrop({ homeFlag, awayFlag, homeName, awayName }: { homeFlag?: string; awayFlag?: string; homeName?: string; awayName?: string }) {
     return (
         <div aria-hidden="true" style={{
