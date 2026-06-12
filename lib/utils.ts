@@ -6,7 +6,20 @@ export const TIMEZONES: Record<Region, string> = {
     fr: 'Europe/Paris',
     no: 'Europe/Oslo',
 }
+export function getTimezoneForRegion(region: Region): string {
+    return TIMEZONES[region]
+}
 
+export function getDateKeyInTimezone(date: string | Date, timezone: string): string {
+    const matchDate = typeof date === 'string' ? new Date(date) : date
+
+    return new Intl.DateTimeFormat('en-CA', {
+        timeZone: timezone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }).format(matchDate)
+}
 // Format match time in user's local timezone
 export function formatKickoff(utcDate: string, region: Region): string {
     return new Date(utcDate).toLocaleTimeString('fr-FR', {
@@ -73,8 +86,12 @@ export function getFullDateLabel(dateStr: string): string {
     return d.toLocaleDateString('en', { weekday: 'long', day: 'numeric', month: 'long' })
 }
 
-export function todayStr(): string {
-    return new Date().toISOString().split('T')[0]
+export function todayStr(region?: Region): string {
+    if (!region) {
+        return new Date().toISOString().split('T')[0]
+    }
+
+    return getDateKeyInTimezone(new Date(), TIMEZONES[region])
 }
 // Check if a match time is late night (00:00 - 06:00) in given region
 export function isLateNight(utcDate: string, region: Region): boolean {

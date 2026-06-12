@@ -4,8 +4,13 @@ import { useState, useMemo, useEffect } from 'react'
 import type { Match } from '@/lib/matches'
 import { MOCK_MATCHES } from '@/lib/matches'
 import { REGIONS, type Region } from '@/lib/channels'
-import { getDayLabel, getFullDateLabel, todayStr } from '@/lib/utils'
-import { filterByDate, getUniqueDates } from '@/lib/api'
+import {
+    getDayLabel,
+    getFullDateLabel,
+    todayStr,
+    getDateKeyInTimezone,
+    TIMEZONES,
+} from '@/lib/utils'
 import NextFeaturedBanner from '@/components/NextFeaturedBanner'
 import InstallBanner from '@/components/InstallBanner'
 import MatchCard from '@/components/MatchCard'
@@ -64,23 +69,46 @@ export default function Home() {
         return () => window.clearTimeout(timer)
     }, [])
 
-    const dates = useMemo(() => getUniqueDates(allMatches), [allMatches])
-    const today = todayStr()
+    const dates = useMemo(() => {
+        const uniqueDates = new Set(
+            allMatches.map((match) =>
+                getDateKeyInTimezone(match.utcDate, TIMEZONES[region])
+            )
+        )
 
+        return Array.from(uniqueDates).sort()
+    }, [allMatches, region])
+
+    const today = todayStr(region)
     const selectedDateResolved = useMemo(() => {
         if (selectedDate) return selectedDate
+
+        if (dates.includes(today)) {
+            return today
+        }
+
         return dates.find((d) => d >= WORLD_CUP_START) ?? dates[0] ?? ''
-    }, [selectedDate, dates])
+    }, [selectedDate, dates, today])
 
     const matches = useMemo(
-        () => filterByDate(allMatches, selectedDateResolved),
-        [allMatches, selectedDateResolved]
+        () =>
+            allMatches.filter(
+                (match) =>
+                    getDateKeyInTimezone(match.utcDate, TIMEZONES[region]) === selectedDateResolved
+            ),
+        [allMatches, selectedDateResolved, region]
     )
-
     const liveCount = useMemo(
         () => allMatches.filter((m) => m.status === 'IN_PLAY' || m.status === 'PAUSED').length,
         [allMatches]
     )
+    const playedCount = useMemo(
+        () => allMatches.filter((m) => m.status === 'FINISHED').length,
+        [allMatches]
+    )
+
+    const totalMatches = allMatches.length || 104
+    const remainingMatches = Math.max(totalMatches - playedCount, 0)
 
     function handleRegionChange(nextRegion: Region) {
         setRegion(nextRegion)
@@ -271,22 +299,42 @@ export default function Home() {
                     borderTop: '1px solid var(--border)',
                 }}>
                     {[
-                        { n: '48', label: 'Teams', accent: false },
-                        { n: '104', label: 'Matches', accent: false },
-                        { n: String(liveCount), label: 'Live now', accent: liveCount > 0 },
-                        { n: String(matches.length), label: 'Today', accent: false },
-                    ].map(({ n, label, accent }, i, arr) => (
+                        { n: '48', label: 'Teams' },
+                        { n: `${remainingMatches}/${totalMatches}`, label: 'Matches left' },
+                        { n: String(liveCount), label: 'Live now' },
+                        { n: String(matches.length), label: 'Today' },
+                    ].map(({ n, label }, i, arr) => (
                         <div key={label} style={{
                             padding: '14px 12px',
                             borderRight: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
                         }}>
                             <div style={{
-                                fontSize: 24, fontWeight: 800, lineHeight: 1, marginBottom: 4,
-                                color: accent ? 'var(--accent)' : 'var(--text)',
+                                fontSize: 24,
+                                fontWeight: 800,
+                                lineHeight: 1,
+                                marginBottom: 4,
+                                color: 'var(--text)',
                                 fontVariantNumeric: 'tabular-nums',
                                 fontFamily: 'var(--font-barlow)',
                             }}>
-                                {n}
+                                {label === 'Matches left' ? (
+                                    <>
+                                        <span
+                                            style={{
+                                                color: 'var(--accent)',
+                                                fontSize: 18,
+                                                marginRight: 3,
+                                            }}
+                                        >
+                                            {remainingMatches}
+                                        </span>
+                                        <span style={{ color: 'var(--text)' }}>
+                                            /{totalMatches}
+                                        </span>
+                                    </>
+                                ) : (
+                                    n
+                                )}
                             </div>
                             <div style={{
                                 fontSize: 9, color: 'var(--text-muted)',
@@ -314,7 +362,7 @@ export default function Home() {
                                 alignItems: 'center', padding: '6px 12px', borderRadius: 8,
                                 border: active ? '1px solid rgba(46,204,113,0.35)' : '1px solid transparent',
                                 background: active ? 'var(--accent-dim)' : 'transparent',
-                                color: active ? 'var(--accent)' : 'var(--text-muted)',
+                                color: active || isToday ? 'var(--accent)' : 'var(--text-muted)',
                                 transition: 'all 0.15s', minWidth: 46,
                             }}>
                                 <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em' }}>{weekday}</span>
