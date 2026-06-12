@@ -153,8 +153,6 @@ export default function Home() {
                 loading={loading}
                 onRegionChange={handleRegionChange}
             />
-            {/* BREATHING ROOM */}
-            <div style={{ height: 8 }} />
 
             {/* BANNER */}
             {!loading && (

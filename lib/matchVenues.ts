@@ -1,5 +1,3 @@
-// Manual venue mapping since football-data.org returns TBC
-// Source: FIFA official schedule
 const MATCH_VENUES: Record<string, string> = {
     // Group A
     'MEX-RSA': 'Estadio Azteca',
@@ -8,6 +6,7 @@ const MATCH_VENUES: Record<string, string> = {
     'MEX-KOR': 'Estadio Akron',
     'CZE-MEX': 'Estadio Azteca',
     'RSA-KOR': 'Estadio BBVA',
+
     // Group B
     'CAN-BIH': 'BMO Field',
     'QAT-SUI': "Levi's Stadium",
@@ -15,72 +14,86 @@ const MATCH_VENUES: Record<string, string> = {
     'CAN-QAT': 'BC Place',
     'SUI-CAN': 'BC Place',
     'BIH-QAT': 'Lumen Field',
+
     // Group C
+    'BRA-MAR': 'MetLife Stadium',
+    'HAI-SCO': 'Gillette Stadium',
+    'SCO-MAR': 'Gillette Stadium',
+    'BRA-HAI': 'Lincoln Financial Field',
+    'SCO-BRA': 'Hard Rock Stadium',
+    'MAR-HAI': 'Mercedes-Benz Stadium',
+
+    // Group D
     'USA-PAR': 'SoFi Stadium',
     'AUS-TUR': 'BC Place',
-    'TUR-PAR': 'Arrowhead Stadium',
-    'USA-AUS': 'SoFi Stadium',
+    'USA-AUS': 'Lumen Field',
+    'TUR-PAR': "Levi's Stadium",
     'TUR-USA': 'SoFi Stadium',
-    'PAR-AUS': 'AT&T Stadium',
-    // Group D
+    'PAR-AUS': "Levi's Stadium",
+
+    // Group E
+    'GER-CUW': 'NRG Stadium',
+    'CIV-ECU': 'Lincoln Financial Field',
+    'GER-CIV': 'BMO Field',
+    'ECU-CUW': 'Arrowhead Stadium',
+    'ECU-GER': 'MetLife Stadium',
+    'CUW-CIV': 'Lincoln Financial Field',
+
+    // Group F
+    'NED-JPN': 'AT&T Stadium',
+    'SWE-TUN': 'Estadio BBVA',
+    'NED-SWE': 'NRG Stadium',
+    'TUN-JPN': 'Estadio BBVA',
+    'JPN-SWE': 'AT&T Stadium',
+    'TUN-NED': 'Arrowhead Stadium',
+
+    // Group G
+    'BEL-EGY': 'Lumen Field',
+    'IRN-NZL': 'SoFi Stadium',
+    'BEL-IRN': 'SoFi Stadium',
+    'NZL-EGY': 'BC Place',
+    'EGY-IRN': 'Lumen Field',
+    'NZL-BEL': 'BC Place',
+
+    // Group H
+    'ESP-CPV': 'Mercedes-Benz Stadium',
+    'SAU-URY': 'Hard Rock Stadium',
+    'ESP-SAU': 'Mercedes-Benz Stadium',
+    'URY-CPV': 'Hard Rock Stadium',
+    'CPV-SAU': 'NRG Stadium',
+    'URY-ESP': 'Estadio Akron',
+
+    // Group I
+    'FRA-SEN': 'MetLife Stadium',
+    'IRQ-NOR': 'Gillette Stadium',
     'FRA-IRQ': 'Lincoln Financial Field',
     'NOR-SEN': 'MetLife Stadium',
-    'IRQ-SEN': 'NRG Stadium',
-    'FRA-NOR': 'Gillette Stadium',
-    'IRQ-NOR': 'AT&T Stadium',
-    'SEN-FRA': 'Lincoln Financial Field',
-    // Group E
+    'NOR-FRA': 'Gillette Stadium',
+    'SEN-IRQ': 'BMO Field',
+
+    // Group J
+    'ARG-ALG': 'Arrowhead Stadium',
+    'AUT-JOR': "Levi's Stadium",
     'ARG-AUT': 'AT&T Stadium',
     'JOR-ALG': "Levi's Stadium",
-    'AUT-ALG': 'Hard Rock Stadium',
-    'ARG-JOR': 'Mercedes-Benz Stadium',
-    'AUT-ARG': 'AT&T Stadium',
-    'ALG-JOR': 'MetLife Stadium',
-    // Group F
-    'POR-UZB': 'NRG Stadium',
-    'ENG-GHA': 'Gillette Stadium',
-    'GHA-UZB': 'Arrowhead Stadium',
-    'ENG-POR': 'MetLife Stadium',
-    'GHA-POR': 'Hard Rock Stadium',
-    'UZB-ENG': 'AT&T Stadium',
-    // Group G
-    'ESP-ARG': 'MetLife Stadium',
-    'NED-TUN': 'BC Place',
-    'ARG-TUN': 'Lumen Field',
-    'ESP-NED': 'AT&T Stadium',
-    'ARG-ESP': 'AT&T Stadium',
-    'TUN-NED': 'Arrowhead Stadium',
-    // Group H
-    'URY-CPV': 'Hard Rock Stadium',
-    'NZL-BEL': 'Lumen Field',
-    'BEL-CPV': 'Mercedes-Benz Stadium',
-    'URY-NZL': 'MetLife Stadium',
-    'BEL-URY': 'Hard Rock Stadium',
-    'CPV-NZL': "Levi's Stadium",
-    // Group I
-    'BRA-IRN': 'SoFi Stadium',
-    'JPN-CRO': 'Estadio Akron',
-    'CRO-IRN': 'BC Place',
-    'BRA-JPN': 'AT&T Stadium',
-    'CRO-BRA': 'MetLife Stadium',
-    'IRN-JPN': 'Arrowhead Stadium',
-    // Group J
-    'ECU-GER': 'SoFi Stadium',
-    'CUW-CIV': "Levi's Stadium",
-    'GER-CIV': 'NRG Stadium',
-    'ECU-CUW': 'AT&T Stadium',
-    'GER-ECU': 'AT&T Stadium',
-    'CIV-CUW': 'Gillette Stadium',
+    'ALG-AUT': 'Arrowhead Stadium',
+    'JOR-ARG': 'AT&T Stadium',
+
     // Group K
-    'EGY-IRN2': 'Gillette Stadium',
-    'SCO-BRA2': 'Hard Rock Stadium',
-    'MAR-HAI': 'Hard Rock Stadium',
-    'MAR-SCO': 'BC Place',
+    'POR-DRC': 'NRG Stadium',
+    'UZB-COL': 'Estadio Azteca',
+    'POR-UZB': 'NRG Stadium',
+    'COL-DRC': 'Estadio Akron',
+    'COL-POR': 'Hard Rock Stadium',
+    'DRC-UZB': 'Mercedes-Benz Stadium',
+
     // Group L
-    'PAN-ENG': 'BMO Field',
-    'ENG-CRO2': 'Lincoln Financial Field',
-    'ENG-GHA2': 'Mercedes-Benz Stadium',
-    'PAN-CRO2': 'Estadio Akron',
+    'ENG-CRO': 'AT&T Stadium',
+    'GHA-PAN': 'BMO Field',
+    'ENG-GHA': 'Gillette Stadium',
+    'PAN-CRO': 'BMO Field',
+    'PAN-ENG': 'MetLife Stadium',
+    'CRO-GHA': 'Lincoln Financial Field',
 }
 
 export function getVenueByTeams(

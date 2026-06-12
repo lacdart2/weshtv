@@ -2,26 +2,10 @@
 
 import { useMemo } from 'react'
 import type { Match } from '@/lib/matches'
-import { getChannelsForMatch, getChannelColor, type Region } from '@/lib/channels'
-import { getAllTimes, isLateNight, getDateKeyInTimezone, TIMEZONES } from '@/lib/utils'
+import { getChannelsForMatch, type Region } from '@/lib/channels'
+import { getAllTimes } from '@/lib/utils'
 import { getTeamFlag } from '@/lib/teamFlags'
 import { useRouter } from 'next/navigation'
-
-function ChannelPill({ name, region }: { name: string; region: Region }) {
-    const color = getChannelColor(region, name)
-    return (
-        <span style={{
-            padding: '2px 7px', borderRadius: 4,
-            fontSize: 10, fontWeight: 600,
-            background: `${color}18`, color,
-            border: `1px solid ${color}40`,
-            whiteSpace: 'nowrap',
-        }}>
-            {name}
-        </span>
-    )
-}
-
 
 interface Props {
     matches: Match[]
@@ -31,16 +15,13 @@ interface Props {
 export default function NextFeaturedBanner({ matches, region }: Props) {
     const router = useRouter()
     const now = new Date()
+
     const banner = useMemo(() => {
         const currentTime = new Date()
-
         const sorted = [...matches].sort(
             (a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()
         )
-
-        const live = sorted.find(m =>
-            m.status === 'IN_PLAY' || m.status === 'PAUSED'
-        )
+        const live = sorted.find(m => m.status === 'IN_PLAY' || m.status === 'PAUSED')
         if (live) return { type: 'live' as const, match: live }
 
         const soon = sorted.find(m => {
@@ -49,23 +30,20 @@ export default function NextFeaturedBanner({ matches, region }: Props) {
         })
         if (soon) return { type: 'soon' as const, match: soon }
 
-        const next = sorted.find(m => {
-            const isUpcoming = new Date(m.utcDate) > currentTime
-            return isUpcoming && m.status !== 'FINISHED'
-        })
+        const next = sorted.find(m =>
+            new Date(m.utcDate) > currentTime && m.status !== 'FINISHED'
+        )
         if (next) return { type: 'next' as const, match: next }
 
         return null
     }, [matches])
+
     if (!banner) return null
 
     const { type, match } = banner
     const t = getAllTimes(match.utcDate, region)
-    const date = getDateKeyInTimezone(match.utcDate, TIMEZONES[region])
     const channels = getChannelsForMatch(region, match.homeTeam.short, match.awayTeam.short, match.stage)
-    const lateNight = isLateNight(match.utcDate, region)
 
-    // Time until match
     const diffMs = new Date(match.utcDate).getTime() - now.getTime()
     const diffH = Math.floor(diffMs / 3600000)
     const diffM = Math.floor((diffMs % 3600000) / 60000)
@@ -77,83 +55,113 @@ export default function NextFeaturedBanner({ matches, region }: Props) {
                 ? `in ${diffM}m`
                 : 'now'
 
-    // Label + color per type
-    const config = {
-        live: {
-            label: '🔴 LIVE NOW',
-            color: '#e74c3c',
-            bg: 'rgba(231,76,60,0.06)',
-            border: 'rgba(231,76,60,0.2)',
-        },
-        soon: {
-            label: `⚽ Starting ${timeUntil}`,
-            color: '#f39c12',
-            bg: 'rgba(243,156,18,0.06)',
-            border: 'rgba(243,156,18,0.2)',
-        },
-        next: {
-            label: `Next match · ${timeUntil}`,
-            color: 'var(--accent)',
-            bg: 'rgba(46,204,113,0.06)',
-            border: 'rgba(46,204,113,0.15)',
-        },
-    }[type]
+    const isLive = type === 'live'
+
+    // Ticker colors — red for live, green for upcoming
+    const bg = isLive ? '#c0392b' : 'var(--banner-bg)'
+    const tagBg = isLive ? '#a93226' : 'var(--banner-tag-bg)'
+    const textColor = isLive ? '#fff' : 'var(--banner-text)'
+    const mutedColor = isLive ? 'rgba(255,255,255,0.7)' : 'var(--banner-muted)'
+    const tagLabel = isLive ? '🔴 LIVE' : type === 'soon' ? `⚽ ${timeUntil}` : `NEXT MATCH · ${timeUntil}`
 
     return (
         <div
             onClick={() => router.push(`/match/${match.id}`)}
             style={{
-                padding: '10px 20px',
-                background: config.bg,
-                borderBottom: `1px solid ${config.border}`,
+                background: bg,
+                borderBottom: `2px solid ${isLive ? '#a93226' : 'rgba(46,204,113,0.15)'}`,
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 12,
+                overflow: 'hidden',
             }}
         >
-            {/* LEFT — label + teams */}
-            <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'stretch', height: 46 }}>
+
+                {/* Tag */}
                 <div style={{
-                    fontSize: 10, fontWeight: 600,
-                    letterSpacing: '0.12em', textTransform: 'uppercase',
-                    color: config.color, marginBottom: 3,
+                    background: tagBg,
+                    display: 'flex', alignItems: 'center',
+                    padding: '0 12px', flexShrink: 0,
+                    gap: 5,
+                    fontSize: 10, fontWeight: 700,
+                    color: '#fff',
+                    letterSpacing: '0.10em',
+                    textTransform: 'uppercase',
                     whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+                    fontFamily: 'var(--font-inter)',
                 }}>
-                    {config.label}
-                </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
-                    {getTeamFlag(match.homeTeam.short)} {match.homeTeam.short} vs{' '}
-                    {getTeamFlag(match.awayTeam.short)} {match.awayTeam.short}
-                    {lateNight && type !== 'live' && (
-                        <span style={{ marginLeft: 6 }}>🌙</span>
+                    {!isLive && (
+                        <span style={{
+                            width: 6, height: 6, borderRadius: '50%',
+                            background: '#fff',
+                            display: 'inline-block',
+                            animation: 'bannerPulse 1.6s ease-in-out infinite',
+                        }} />
                     )}
+                    <span className="banner-tag-label">{tagLabel}</span>
+                    <span className="banner-tag-label-short" style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em' }}>
+                        {isLive ? '🔴 LIVE' : 'NEXT'}
+                    </span>
+                </div>
+
+                {/* Teams + time */}
+                <div style={{
+                    display: 'flex', alignItems: 'center',
+                    padding: '0 14px', gap: 10, flex: 1, minWidth: 0,
+                }}>
+                    <span className="banner-teams" style={{
+                        fontSize: 15, fontWeight: 800,
+                        color: textColor,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden', textOverflow: 'ellipsis',
+                        fontFamily: 'var(--font-barlow)',
+                    }}>
+                        {getTeamFlag(match.homeTeam.short)} {match.homeTeam.short}
+                        {' '}
+                        {isLive
+                            ? `${match.score.home ?? 0}:${match.score.away ?? 0}`
+                            : 'vs'
+                        }
+                        {' '}
+                        {getTeamFlag(match.awayTeam.short)} {match.awayTeam.short}
+                    </span>
+                    <span style={{ fontSize: 12, color: mutedColor, flexShrink: 0 }}>·</span>
+                    <span className="banner-time" style={{
+                        fontSize: 16, fontWeight: 900,
+                        color: textColor, flexShrink: 0,
+                        fontFamily: 'var(--font-barlow)',
+                        fontVariantNumeric: 'tabular-nums',
+                    }}>
+                        {isLive ? 'LIVE' : t.local}
+                    </span>
+                </div>
+
+                {/* Channel + arrow */}
+                <div style={{
+                    display: 'flex', alignItems: 'center',
+                    padding: '0 12px', gap: 6, flexShrink: 0,
+                }}>
+                    {channels[0] && (
+                        <span style={{
+                            fontSize: 10, fontWeight: 700,
+                            padding: '3px 8px', borderRadius: 4,
+                            background: isLive ? 'rgba(255,255,255,0.2)' : 'var(--banner-channel-bg)',
+                            color: isLive ? '#fff' : 'var(--banner-channel-text)',
+                            fontFamily: 'var(--font-inter)',
+                            whiteSpace: 'nowrap',
+                        }}>
+                            {channels[0]}
+                        </span>
+                    )}
+                    <span style={{ fontSize: 14, color: textColor, fontWeight: 700 }}>→</span>
                 </div>
             </div>
 
-            {/* RIGHT — time + channel + arrow */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                <div style={{ textAlign: 'right' }}>
-                    <div style={{
-                        fontSize: 14, fontWeight: 800,
-                        color: type === 'live' ? '#e74c3c' : 'var(--text)',
-                        fontVariantNumeric: 'tabular-nums',
-                    }}>
-                        {type === 'live' ? `${match.score.home ?? 0} : ${match.score.away ?? 0}` : t.local}
-                    </div>
-                    <div style={{ fontSize: 10, color: '#666' }}>
-                        {type === 'live' ? 'in progress' : new Date(match.utcDate).toLocaleDateString('en', {
-                            weekday: 'short', day: 'numeric', month: 'short',
-                        })}
-                    </div>
-                </div>
-                {channels[0] && <ChannelPill name={channels[0]} region={region} />}
-                <span style={{ fontSize: 14, color: config.color }}>→</span>
-            </div>
+            <style>{`
+                @keyframes bannerPulse {
+                    0%, 100% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.4; transform: scale(0.8); }
+                }
+            `}</style>
         </div>
     )
 }
-

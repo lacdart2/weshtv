@@ -82,6 +82,13 @@ html {
     --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
     --detail-team-label-bg: rgba(10, 10, 10, 0.28);
     --detail-team-label-border: rgba(255, 255, 255, 0.08);
+    /* Banner */
+    --banner-bg: #2ecc71;
+    --banner-tag-bg: #27ae60;
+    --banner-text: #0a3d1f;
+    --banner-muted: rgba(0, 0, 0, 0.45);
+    --banner-channel-bg: rgba(0, 0, 0, 0.15);
+    --banner-channel-text: #0a3d1f;
 }
 
 /* =========================================================
@@ -230,6 +237,13 @@ html {
     --detail-text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
     --detail-team-label-bg: rgba(10, 10, 10, 0.28);
     --detail-team-label-border: rgba(255, 255, 255, 0.08);
+    /* Banner */
+    --banner-bg: linear-gradient(90deg, #0d1f10 0%, #0f2312 40%, #0a1a0d 100%);
+    --banner-tag-bg: #0c1a0e;
+    --banner-text: #efefef;
+    --banner-muted: #444444;
+    --banner-channel-bg: rgba(46, 204, 113, 0.12);
+    --banner-channel-text: #2ecc71;
 }
 
 /* =========================================================
@@ -338,5 +352,35 @@ div {
 @media (max-width: 480px) {
     .schedule-match-row {
         padding: 10px 12px !important;
+    }
+}
+
+/* =========================================================
+   BANNER — mobile compact
+========================================================= */
+
+.banner-tag-label {
+    display: inline;
+}
+
+.banner-tag-label-short {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .banner-tag-label {
+        display: none;
+    }
+
+    .banner-tag-label-short {
+        display: inline;
+    }
+
+    .banner-teams {
+        font-size: 13px !important;
+    }
+
+    .banner-time {
+        font-size: 14px !important;
     }
 }
