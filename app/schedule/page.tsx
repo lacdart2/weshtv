@@ -11,6 +11,8 @@ import Footer from '@/components/Footer'
 import BottomNav from '@/components/BottomNav'
 import ThemeToggle from '@/components/ThemeToggle'
 import { getTeamFlag } from '@/lib/teamFlags'
+import { useMyTeams } from '@/lib/myTeams'
+import MyTeamsPicker from '@/components/MyTeamsPicker'
 
 function useMatches() {
     const [matches, setMatches] = useState<Match[]>(MOCK_MATCHES)
@@ -77,11 +79,22 @@ function TeamName({ code }: { code?: string }) {
         </span>
     )
 }
+const ALIASES: Record<string, string[]> = {
+    ALG: ['ALG', 'DZA'], DZA: ['ALG', 'DZA'],
+    MAR: ['MAR', 'MOR'], MOR: ['MAR', 'MOR'],
+}
+function matchesMyTeam(code: string, teams: string[]): boolean {
+    const upper = code.toUpperCase()
+    return teams.some(t => (ALIASES[t] ?? [t]).includes(upper))
+}
+
 export default function SchedulePage() {
     const allMatches = useMatches()
     const [region, setRegion] = useState<Region>('dz')
     const [search, setSearch] = useState('')
     const [filter, setFilter] = useState<'all' | 'featured'>('all')
+    const { myTeams, toggleTeam } = useMyTeams()
+    const [pickerOpen, setPickerOpen] = useState(false)
 
     useEffect(() => {
         const timer = window.setTimeout(() => setRegion(detectRegionByTimezone()), 0)
@@ -96,9 +109,12 @@ export default function SchedulePage() {
             away.toLowerCase().includes(search.toLowerCase()) ||
             m.homeTeam.name?.toLowerCase().includes(search.toLowerCase()) ||
             m.awayTeam.name?.toLowerCase().includes(search.toLowerCase())
-        const matchesFilter = filter === 'all' || isFeaturedMatch(home, away)
+        const matchesFilter = filter === 'all' ||
+            (myTeams.length > 0
+                ? matchesMyTeam(home, myTeams) || matchesMyTeam(away, myTeams)
+                : false)
         return matchesSearch && matchesFilter
-    }), [allMatches, search, filter])
+    }), [allMatches, search, filter, myTeams])
 
     const grouped = useMemo(() => groupByDate(filtered), [filtered])
     const dates = Object.keys(grouped).sort()
@@ -199,7 +215,8 @@ export default function SchedulePage() {
                     </div>
                     <div style={{ display: 'flex', gap: 6 }}>
                         {(['all', 'featured'] as const).map(f => (
-                            <button key={f} onClick={() => setFilter(f)} style={{
+                            /*  <button key={f} onClick={() => setFilter(f)} style={{ */
+                            <button key={f} onClick={() => { setFilter(f); if (f === 'featured') setPickerOpen(true) }} style={{
                                 padding: '8px 14px', borderRadius: 8,
                                 fontSize: 12, fontWeight: 600, cursor: 'pointer',
                                 border: filter === f ? '1px solid rgba(46,204,113,0.4)' : '1px solid var(--border)',
@@ -208,7 +225,22 @@ export default function SchedulePage() {
                                 fontFamily: 'var(--font-inter)',
                                 display: 'flex', alignItems: 'center', gap: 5,
                             }}>
-                                {f === 'featured' ? <><Heart size={12} /> My teams</> : 'All matches'}
+                                {f === 'featured' ? (
+                                    <>
+                                        <Heart size={12} style={{ fill: myTeams.length > 0 ? 'currentColor' : 'none' }} />
+                                        My teams
+                                        {myTeams.length > 0 && (
+                                            <span style={{
+                                                background: 'var(--accent)', color: '#000',
+                                                fontSize: 9, fontWeight: 800,
+                                                borderRadius: 999, padding: '1px 5px',
+                                                fontFamily: 'var(--font-inter)',
+                                            }}>
+                                                {myTeams.length}
+                                            </span>
+                                        )}
+                                    </>
+                                ) : 'All matches'}
                             </button>
                         ))}
                     </div>
@@ -361,7 +393,12 @@ export default function SchedulePage() {
 
                 <div style={{ height: 80 }} />
             </div>
-
+            <MyTeamsPicker
+                open={pickerOpen}
+                onClose={() => setPickerOpen(false)}
+                myTeams={myTeams}
+                onToggle={toggleTeam}
+            />
             <Footer />
             <BottomNav region={region} onRegionToggle={toggleRegion} />
         </div>
