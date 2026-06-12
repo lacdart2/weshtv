@@ -2,39 +2,54 @@
           "region": "Norway",
           "flag": "🇳🇴",
           "timezone": "Europe/Oslo",
-          "note": "NRK (free) and TV 2 (subscription) share all 104 matches. NRK is completely free to watch.",
+          "note": "NRK and TV 2 share the FIFA World Cup 2026 rights in Norway. NRK matches are free through NRK1 / NRK, while TV 2 matches are available through TV 2 / TV 2 Play.",
           "channels": [
                     {
                               "name": "NRK1",
                               "type": "free",
-                              "coverage": "~52 matches — free to air",
+                              "coverage": "Selected World Cup matches — free to air",
                               "color": "#e74c3c"
                     },
                     {
-                              "name": "NRK2",
-                              "type": "free",
-                              "coverage": "selected matches — free to air",
+                              "name": "NRK",
+                              "type": "streaming",
+                              "coverage": "NRK online streaming",
                               "color": "#c0392b"
                     },
                     {
                               "name": "TV 2",
                               "type": "premium",
-                              "coverage": "~52 matches — subscription required",
+                              "coverage": "Selected World Cup matches",
                               "color": "#2ecc71"
+                    },
+                    {
+                              "name": "TV 2 Sport 1",
+                              "type": "premium",
+                              "coverage": "Possible overflow / simultaneous matches",
+                              "color": "#27ae60"
                     },
                     {
                               "name": "TV 2 Play",
                               "type": "streaming",
-                              "coverage": "all TV 2 matches — online streaming",
-                              "color": "#27ae60"
+                              "coverage": "TV 2 online streaming",
+                              "color": "#16a085"
                     }
           ],
           "specialMatches": {
-                    "NOR": ["TV 2", "TV 2 Play"],
-                    "NOR_R32": ["TV 2", "TV 2 Play"],
-                    "NOR_R16": ["NRK1"],
-                    "final": ["NRK1", "TV 2"],
-                    "semi_final": ["NRK1", "TV 2"],
-                    "default": ["NRK1", "TV 2", "TV 2 Play"]
+                    "MEX-RSA": ["TV 2", "TV 2 Play"],
+                    "KOR-CZE": ["NRK1", "NRK"],
+                    "CAN-BIH": ["NRK1", "NRK"],
+                    "QAT-SUI": ["TV 2", "TV 2 Play"],
+                    "AUS-TUR": ["NRK1", "NRK"],
+
+                    "IRQ-NOR": ["TV 2", "TV 2 Play"],
+                    "NOR-SEN": ["NRK1", "NRK"],
+                    "NOR-FRA": ["NRK1", "NRK"],
+
+                    "NOR": ["NRK1", "NRK", "TV 2", "TV 2 Play"],
+
+                    "final": ["NRK1", "NRK"],
+                    "semi_final": ["NRK1", "NRK", "TV 2", "TV 2 Play"],
+                    "default": ["NRK1", "NRK", "TV 2", "TV 2 Play"]
           }
 }

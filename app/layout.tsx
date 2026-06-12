@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, Inter } from 'next/font/google'
 import './globals.css'
-import Script from 'next/script'
+import ThemeProvider from '@/components/ThemeProvider'
+import AppClientEffects from '@/components/AppClientEffects'
 
 const barlow = Barlow_Condensed({
     subsets: ['latin'],
@@ -35,54 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </head>
 
             <body suppressHydrationWarning>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            (function() {
-                                try {
-                                    var theme = localStorage.getItem('weshtv-theme') || 'dark';
-                                    document.documentElement.setAttribute('data-theme', theme);
-                                } catch(e) {}
-                            })();
-                        `,
-                    }}
-                />
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
 
-                {children}
-
-                <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-WWNHTMHKQV"
-                    strategy="afterInteractive"
-                />
-
-                <Script
-                    id="google-analytics"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
-                            gtag('config', 'G-WWNHTMHKQV');
-                        `,
-                    }}
-                />
-
-                <Script
-                    id="register-service-worker"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
-                                window.addEventListener('load', () => {
-                                    navigator.serviceWorker.register('/sw.js')
-                                        .then(() => console.log('Service Worker registered'))
-                                        .catch((error) => console.log('Service Worker registration failed:', error))
-                                })
-                            }
-                        `,
-                    }}
-                />
+                <AppClientEffects />
             </body>
         </html>
     )

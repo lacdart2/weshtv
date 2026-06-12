@@ -5,8 +5,6 @@ export type Region = 'dz' | 'no'
 
 interface ChannelInfo {
     name: string
-    type: string
-    coverage: string
     color: string
 }
 
@@ -25,7 +23,7 @@ export const REGIONS: Record<Region, RegionData> = {
 }
 
 // Get channels for a specific match based on teams playing
-export function getChannelsForMatch(
+/* export function getChannelsForMatch(
     region: Region,
     homeTeamShort: string | null | undefined,
     awayTeamShort: string | null | undefined,
@@ -47,7 +45,41 @@ export function getChannelsForMatch(
 
     return special['default'] ?? data.channels.map(c => c.name)
 }
+ */
+// Get channels for a specific match based on exact matchup, team, or stage
+export function getChannelsForMatch(
+    region: Region,
+    homeTeamShort: string | null | undefined,
+    awayTeamShort: string | null | undefined,
+    stage: string | null | undefined
+): string[] {
+    const data = REGIONS[region]
+    const special = data.specialMatches
 
+    const home = homeTeamShort?.toUpperCase() ?? ''
+    const away = awayTeamShort?.toUpperCase() ?? ''
+    const stageStr = stage?.toLowerCase() ?? ''
+
+    // 1. Exact matchup first: ARG-ALG or ALG-ARG
+    if (home && away) {
+        const directKey = `${home}-${away}`
+        const reverseKey = `${away}-${home}`
+
+        if (special[directKey]) return special[directKey]
+        if (special[reverseKey]) return special[reverseKey]
+    }
+
+    // 2. Team-specific fallback: ALG, MAR, TUN, NOR
+    if (home && special[home]) return special[home]
+    if (away && special[away]) return special[away]
+
+    // 3. Stage fallback
+    if (stageStr.includes('final') && special['final']) return special['final']
+    if (stageStr.includes('semi') && special['semi_final']) return special['semi_final']
+
+    // 4. Default fallback
+    return special['default'] ?? data.channels.map((channel) => channel.name)
+}
 export function getChannelColor(region: Region, channelName: string): string {
     const ch = REGIONS[region].channels.find(c => c.name === channelName)
     return ch?.color ?? '#555555'

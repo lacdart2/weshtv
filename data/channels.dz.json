@@ -2,50 +2,97 @@
           "region": "Algeria",
           "flag": "🇩🇿",
           "timezone": "Africa/Algiers",
-          "note": "beIN Sports holds exclusive MENA rights. EPTV (Algérie 1) acquired 13 matches including all 3 Algeria group games — free to air.",
+          "note": "beIN SPORTS MENA holds the main regional rights. Algeria, Morocco and Tunisia may also have selected local terrestrial broadcasts for national-team matches.",
           "channels": [
                     {
-                              "name": "beIN Sports MAX 1",
+                              "name": "beIN MAX 1",
                               "type": "premium",
-                              "coverage": "all 104 matches",
+                              "coverage": "Main Arabic World Cup channel",
                               "color": "#9b59b6"
                     },
                     {
-                              "name": "beIN Sports MAX 2",
+                              "name": "beIN MAX 2",
                               "type": "premium",
-                              "coverage": "simultaneous matches",
+                              "coverage": "Secondary Arabic World Cup channel / simultaneous matches",
                               "color": "#8e44ad"
                     },
                     {
-                              "name": "beIN Sports MAX 3",
+                              "name": "beIN MAX 3",
                               "type": "premium",
-                              "coverage": "simultaneous matches",
+                              "coverage": "Additional simultaneous matches",
                               "color": "#7d3c98"
                     },
                     {
-                              "name": "Algérie 1",
-                              "type": "free",
-                              "coverage": "13 matches including all Algeria group games — FREE",
-                              "color": "#27ae60"
+                              "name": "beIN MAX 4",
+                              "type": "premium",
+                              "coverage": "Additional simultaneous matches",
+                              "color": "#6f2c91"
+                    },
+                    {
+                              "name": "beIN MAX 5",
+                              "type": "premium",
+                              "coverage": "English coverage",
+                              "color": "#2980b9"
+                    },
+                    {
+                              "name": "beIN MAX 6",
+                              "type": "premium",
+                              "coverage": "French coverage, widely watched in North Africa",
+                              "color": "#16a085"
                     },
                     {
                               "name": "beIN CONNECT",
                               "type": "streaming",
-                              "coverage": "all 104 matches — online",
+                              "coverage": "Online streaming",
                               "color": "#6c3483"
+                    },
+                    {
+                              "name": "TOD",
+                              "type": "streaming",
+                              "coverage": "Digital streaming platform",
+                              "color": "#34495e"
+                    },
+                    {
+                              "name": "ENTV",
+                              "type": "free",
+                              "coverage": "Possible / local terrestrial Algeria matches",
+                              "color": "#27ae60"
+                    },
+                    {
+                              "name": "Arryadia TNT",
+                              "type": "free",
+                              "coverage": "Possible / local terrestrial Morocco matches",
+                              "color": "#c0392b"
                     }
           ],
           "specialMatches": {
-                    "ALG": ["Algérie 1", "beIN Sports MAX 1"],
-                    "TUN": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
-                    "MAR": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
-                    "EGY": ["beIN Sports MAX 1", "beIN Sports MAX 2"],
-                    "final": ["beIN Sports MAX 1"],
-                    "semi_final": ["beIN Sports MAX 1"],
+                    "ARG-ALG": ["beIN MAX 1", "beIN MAX 6", "ENTV"],
+                    "ALG-JOR": ["beIN MAX 1", "beIN MAX 6", "ENTV"],
+                    "AUT-ALG": ["beIN MAX 2", "beIN MAX 6", "ENTV"],
+
+                    "BRA-MAR": ["beIN MAX 1", "beIN MAX 6", "Arryadia TNT"],
+                    "SCO-MAR": ["beIN MAX 1", "beIN MAX 6", "Arryadia TNT"],
+                    "MAR-HAI": ["beIN MAX 2", "beIN MAX 6", "Arryadia TNT"],
+
+                    "SWE-TUN": ["beIN MAX 1", "beIN MAX 5"],
+                    "TUN-JPN": ["beIN MAX 1", "beIN MAX 5"],
+                    "TUN-NED": ["beIN MAX 2", "beIN MAX 5"],
+
+                    "ALG": ["beIN MAX 1", "beIN MAX 6", "ENTV"],
+                    "DZA": ["beIN MAX 1", "beIN MAX 6", "ENTV"],
+                    "MAR": ["beIN MAX 1", "beIN MAX 6", "Arryadia TNT"],
+                    "MOR": ["beIN MAX 1", "beIN MAX 6", "Arryadia TNT"],
+                    "TUN": ["beIN MAX 1", "beIN MAX 5"],
+                    "EGY": ["beIN MAX 1", "beIN MAX 6"],
+
+                    "final": ["beIN MAX 1", "beIN MAX 6"],
+                    "semi_final": ["beIN MAX 1", "beIN MAX 2", "beIN MAX 6"],
                     "default": [
-                              "beIN Sports MAX 1",
-                              "beIN Sports MAX 2",
-                              "beIN Sports MAX 3"
+                              "beIN MAX 1",
+                              "beIN MAX 2",
+                              "beIN MAX 3",
+                              "beIN CONNECT",
+                              "TOD"
                     ]
           }
 }
