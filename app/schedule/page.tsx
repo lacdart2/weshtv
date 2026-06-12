@@ -12,27 +12,6 @@ import BottomNav from '@/components/BottomNav'
 import ThemeToggle from '@/components/ThemeToggle'
 import { getTeamFlag } from '@/lib/teamFlags'
 
-/* const TEAM_FLAGS: Record<string, string> = {
-    ALG: '🇩🇿', DZA: '🇩🇿',
-    TUN: '🇹🇳', MAR: '🇲🇦', MOR: '🇲🇦',
-    NOR: '🇳🇴', EGY: '🇪🇬', FRA: '🇫🇷',
-    BRA: '🇧🇷', ARG: '🇦🇷', ESP: '🇪🇸',
-    GER: '🇩🇪', ENG: '🇬🇧', POR: '🇵🇹',
-    USA: '🇺🇸', MEX: '🇲🇽', CAN: '🇨🇦',
-    JPN: '🇯🇵', KOR: '🇰🇷', AUS: '🇦🇺',
-    NED: '🇳🇱', BEL: '🇧🇪', SUI: '🇨🇭',
-    CRO: '🇭🇷', SEN: '🇸🇳', URY: '🇺🇾',
-    COL: '🇨🇴', ECU: '🇪🇨', PAR: '🇵🇾',
-    QAT: '🇶🇦', IRN: '🇮🇷', SWE: '🇸🇪',
-    DEN: '🇩🇰', SCO: '🇬🇧', RSA: '🇿🇦',
-    GHA: '🇬🇭', CMR: '🇨🇲', CIV: "🇨🇮",
-    TUR: '🇹🇷', POL: '🇵🇱', SRB: '🇷🇸',
-    UKR: '🇺🇦', HAI: '🇭🇹', JAM: '🇯🇲',
-    CPV: '🇨🇻', CUW: '🇨🇼', BIH: '🇧🇦',
-    UZB: '🇺🇿', JOR: '🇯🇴', IRQ: '🇮🇶',
-    NZL: '🇳🇿',
-} */
-
 function useMatches() {
     const [matches, setMatches] = useState<Match[]>(MOCK_MATCHES)
     useEffect(() => {
@@ -69,23 +48,22 @@ function formatDate(dateStr: string): string {
 }
 
 function TeamName({ code }: { code?: string }) {
-    if (!code) return <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>TBD</span>
-    // const flag = TEAM_FLAGS[code.toUpperCase()]
+    if (!code) return <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>TBD</span>
     const flag = getTeamFlag(code)
     return (
-        <span style={{ display: 'flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap' }}>
-            {flag && <span style={{ fontSize: 15 }}>{flag}</span>}
+        <span style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 0, overflow: 'hidden' }}>
+            {flag && <span style={{ fontSize: 14, flexShrink: 0 }}>{flag}</span>}
             <span style={{
-                fontSize: 15, fontWeight: 800,
-                textTransform: 'uppercase', letterSpacing: '0.06em',
+                fontSize: 14, fontWeight: 800,
+                textTransform: 'uppercase', letterSpacing: '0.05em',
                 color: 'var(--text)', fontFamily: 'var(--font-barlow)',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>
                 {code}
             </span>
         </span>
     )
 }
-
 export default function SchedulePage() {
     const allMatches = useMatches()
     const [region, setRegion] = useState<Region>('dz')
@@ -288,10 +266,8 @@ export default function SchedulePage() {
                                             onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
                                             onMouseLeave={e => e.currentTarget.style.background = featured ? 'rgba(46,204,113,0.05)' : 'var(--surface)'}
                                         >
+
                                             {/* Top row — time + teams + channel */}
-                                            {/*   <div style={{
-                                                display: 'flex', alignItems: 'center', gap: 12,
-                                            }}> */}
                                             <div className="schedule-row">
                                                 <div style={{ minWidth: 54, textAlign: 'center', flexShrink: 0 }}>
                                                     {live ? (
@@ -315,14 +291,11 @@ export default function SchedulePage() {
                                                         {finished ? 'FT' : live ? '' : 'KO'}
                                                     </div>
                                                 </div>
-
-
                                                 <div style={{ width: 1, height: 32, background: 'var(--border)', flexShrink: 0 }} />
-
-
-                                                {/*  <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}> */}
                                                 <div className="schedule-teams">
-                                                    <TeamName code={match.homeTeam.short} />
+                                                    <div style={{ display: 'flex', justifyContent: 'flex-end', minWidth: 0 }}>
+                                                        <TeamName code={match.homeTeam.short} />
+                                                    </div>
 
                                                     <span style={{
                                                         fontSize: 13, fontWeight: 700,
@@ -333,15 +306,15 @@ export default function SchedulePage() {
                                                         padding: '2px 8px', borderRadius: 5,
                                                         fontFamily: 'var(--font-barlow)',
                                                         flexShrink: 0,
+                                                        textAlign: 'center',
                                                     }}>
                                                         {hasScore ? `${match.score.home}:${match.score.away}` : 'vs'}
                                                     </span>
 
-                                                    <TeamName code={match.awayTeam.short} />
+                                                    <div style={{ display: 'flex', justifyContent: 'flex-start', minWidth: 0 }}>
+                                                        <TeamName code={match.awayTeam.short} />
+                                                    </div>
                                                 </div>
-
-                                                {/*    {mainChannel && (
-                                                    <div style={{ flexShrink: 0 }}> */}
                                                 {mainChannel && (
                                                     <div className="schedule-channel">
                                                         <span style={{
@@ -358,7 +331,6 @@ export default function SchedulePage() {
                                                     </div>
                                                 )}
                                             </div>
-                                            {/* Top row — time + teams + score + channel */}
 
                                         </div>
                                     </Link>

@@ -125,12 +125,6 @@ export default function NextFeaturedBanner({ matches, region }: Props) {
                 }}>
                     {config.label}
                 </div>
-                {/* <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
-                    {match.homeTeam.short} vs {match.awayTeam.short}
-                    {lateNight && type !== 'live' && (
-                        <span style={{ marginLeft: 6 }}>🌙</span>
-                    )}
-                </div> */}
                 <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
                     {getTeamFlag(match.homeTeam.short)} {match.homeTeam.short} vs{' '}
                     {getTeamFlag(match.awayTeam.short)} {match.awayTeam.short}

@@ -306,7 +306,8 @@ div {
 .schedule-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
 }
 
 .schedule-teams {
@@ -314,30 +315,20 @@ div {
     min-width: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+@media (min-width: 600px) {
+    .schedule-teams {
+        gap: 14px;
+    }
 }
 
 .schedule-channel {
     flex-shrink: 0;
-}
-
-@media (max-width: 380px) {
-    .schedule-row {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .schedule-teams {
-        flex-basis: 100%;
-        order: 2;
-    }
-
-    .schedule-channel {
-        order: 3;
-        flex-basis: 100%;
-        padding-left: 66px;
-    }
+    margin-left: auto;
 }
 
 /* =========================================================
@@ -346,7 +337,6 @@ div {
 
 @media (max-width: 480px) {
     .schedule-match-row {
-        padding: 14px 18px !important;
-        min-height: 58px;
+        padding: 10px 12px !important;
     }
 }
