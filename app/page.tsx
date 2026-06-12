@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import type { Match } from '@/lib/matches'
 import { MOCK_MATCHES } from '@/lib/matches'
 import { REGIONS, type Region } from '@/lib/channels'
@@ -61,6 +61,8 @@ export default function Home() {
     const { matches: allMatches, loading, source } = useMatches()
     const [region, setRegion] = useState<Region>('dz')
     const [selectedDate, setSelectedDate] = useState<string>('')
+    const dateStripRef = useRef<HTMLDivElement | null>(null)
+    const todayButtonRef = useRef<HTMLButtonElement | null>(null)
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -89,6 +91,16 @@ export default function Home() {
 
         return dates.find((d) => d >= WORLD_CUP_START) ?? dates[0] ?? ''
     }, [selectedDate, dates, today])
+
+    useEffect(() => {
+        if (!dateStripRef.current || !todayButtonRef.current) return
+
+        todayButtonRef.current.scrollIntoView({
+            behavior: 'smooth',
+            inline: 'start',
+            block: 'nearest',
+        })
+    }, [today, dates])
 
     const matches = useMemo(
         () =>
@@ -348,23 +360,36 @@ export default function Home() {
                 </div>
 
                 {/* DATE STRIP */}
-                <div style={{
-                    display: 'flex', gap: 4, padding: '10px 20px',
-                    borderBottom: '1px solid var(--border)', overflowX: 'auto',
-                }}>
-                    {dates.map((d) => {
+                <div
+                    ref={dateStripRef}
+                    style={{
+                        display: 'flex',
+                        gap: 4,
+                        padding: '10px 0',
+                        borderBottom: '1px solid var(--border)',
+                        overflowX: 'auto',
+                        scrollBehavior: 'smooth',
+                    }}
+                >
+                    {dates.map((d, i) => {
                         const { weekday, day } = getDayLabel(d)
                         const active = d === selectedDateResolved
                         const isToday = d === today
                         return (
-                            <button key={d} onClick={() => setSelectedDate(d)} style={{
-                                flexShrink: 0, display: 'flex', flexDirection: 'column',
-                                alignItems: 'center', padding: '6px 12px', borderRadius: 8,
-                                border: active ? '1px solid rgba(46,204,113,0.35)' : '1px solid transparent',
-                                background: active ? 'var(--accent-dim)' : 'transparent',
-                                color: active || isToday ? 'var(--accent)' : 'var(--text-muted)',
-                                transition: 'all 0.15s', minWidth: 46,
-                            }}>
+                            <button
+                                key={d}
+                                ref={isToday ? todayButtonRef : null}
+                                onClick={() => setSelectedDate(d)}
+                                style={{
+                                    flexShrink: 0, display: 'flex', flexDirection: 'column',
+                                    alignItems: 'center', padding: '6px 12px', borderRadius: 8,
+                                    border: active ? '1px solid rgba(46,204,113,0.35)' : '1px solid transparent',
+                                    background: active ? 'var(--accent-dim)' : 'transparent',
+                                    color: active || isToday ? 'var(--accent)' : 'var(--text-muted)',
+                                    transition: 'all 0.15s', minWidth: 46,
+                                    marginLeft: i === 0 ? 20 : 0,
+                                    marginRight: i === dates.length - 1 ? 20 : 0,
+                                }}>
                                 <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em' }}>{weekday}</span>
                                 <span style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.2 }}>{day}</span>
                                 {isToday && (
