@@ -22,30 +22,6 @@ export const REGIONS: Record<Region, RegionData> = {
     no: noData as RegionData,
 }
 
-// Get channels for a specific match based on teams playing
-/* export function getChannelsForMatch(
-    region: Region,
-    homeTeamShort: string | null | undefined,
-    awayTeamShort: string | null | undefined,
-    stage: string | null | undefined
-): string[] {
-    const data = REGIONS[region]
-    const special = data.specialMatches
-
-    // Safe fallback if teams not determined yet
-    const home = homeTeamShort?.toUpperCase() ?? ''
-    const away = awayTeamShort?.toUpperCase() ?? ''
-    const stageStr = stage ?? ''
-
-    if (home && special[home]) return special[home]
-    if (away && special[away]) return special[away]
-
-    if (stageStr.includes('FINAL') && special['final']) return special['final']
-    if (stageStr.includes('SEMI') && special['semi_final']) return special['semi_final']
-
-    return special['default'] ?? data.channels.map(c => c.name)
-}
- */
 // Get channels for a specific match based on exact matchup, team, or stage
 export function getChannelsForMatch(
     region: Region,

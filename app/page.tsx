@@ -161,7 +161,6 @@ export default function Home() {
                 <NextFeaturedBanner
                     matches={allMatches}
                     region={region}
-                    onJump={setSelectedDate}
                 />
             )}
 

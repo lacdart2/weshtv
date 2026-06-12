@@ -192,7 +192,6 @@ export default function MatchDetailPage() {
                         >
                             <ChevronLeft size={14} /> Back
                         </button>
-
                         <span style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                             {match.group?.replace(/_/g, ' ') || match.stage?.replace(/_/g, ' ')}
                         </span>

@@ -1,6 +1,7 @@
 'use client'
 
 import { REGIONS, type Region } from '@/lib/channels'
+import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import type { ReactNode } from 'react'
 
@@ -39,25 +40,29 @@ export default function Navbar({
                 height: 52,
                 gap: 8,
             }}>
-                <span style={{
-                    fontWeight: 900,
-                    fontSize: 17,
-                    letterSpacing: '0.08em',
-                    fontFamily: 'var(--font-barlow)',
-                    flexShrink: 0,
-                    color: 'var(--logo-text)',
-                }}>
-                    WESH<span style={{ color: 'var(--accent)' }}>TV</span>{' '}
-                    {!leftContent && (
-                        <span style={{
-                            fontSize: 9, fontWeight: 500,
-                            letterSpacing: '0.1em', verticalAlign: 'middle',
-                            color: source === 'api' ? 'var(--accent)' : 'var(--text-muted)',
-                        }}>
-                            {loading ? '...' : source === 'api' ? '● LIVE' : '● MOCK'}
-                        </span>
-                    )}
-                </span>
+                <Link href="/" style={{ textDecoration: 'none' }}>
+                    <span style={{
+                        fontWeight: 900,
+                        fontSize: 17,
+                        letterSpacing: '0.08em',
+                        fontFamily: 'var(--font-barlow)',
+                        flexShrink: 0,
+                        color: 'var(--logo-text)',
+                    }}>
+                        WESH<span style={{ color: 'var(--accent)' }}>TV</span>{' '}
+                        {!leftContent && (
+                            <span style={{
+                                fontSize: 9,
+                                fontWeight: 500,
+                                letterSpacing: '0.1em',
+                                verticalAlign: 'middle',
+                                color: source === 'api' ? 'var(--accent)' : 'var(--text-muted)',
+                            }}>
+                                {loading ? '...' : source === 'api' ? '● LIVE' : '● MOCK'}
+                            </span>
+                        )}
+                    </span>
+                </Link>
 
                 <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                     {(Object.entries(REGIONS) as [Region, typeof REGIONS[Region]][]).map(([key, r]) => (

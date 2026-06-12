@@ -6,12 +6,13 @@ import type { Match } from '@/lib/matches'
 import { MOCK_MATCHES } from '@/lib/matches'
 import { REGIONS, getChannelsForMatch, getChannelColor, type Region } from '@/lib/channels'
 import { getAllTimes, isFeaturedMatch } from '@/lib/utils'
-import { ChevronLeft, Search, Heart } from 'lucide-react'
+import { Search, Heart } from 'lucide-react'
 import Footer from '@/components/Footer'
 import BottomNav from '@/components/BottomNav'
 import ThemeToggle from '@/components/ThemeToggle'
+import { getTeamFlag } from '@/lib/teamFlags'
 
-const TEAM_FLAGS: Record<string, string> = {
+/* const TEAM_FLAGS: Record<string, string> = {
     ALG: '🇩🇿', DZA: '🇩🇿',
     TUN: '🇹🇳', MAR: '🇲🇦', MOR: '🇲🇦',
     NOR: '🇳🇴', EGY: '🇪🇬', FRA: '🇫🇷',
@@ -30,7 +31,7 @@ const TEAM_FLAGS: Record<string, string> = {
     CPV: '🇨🇻', CUW: '🇨🇼', BIH: '🇧🇦',
     UZB: '🇺🇿', JOR: '🇯🇴', IRQ: '🇮🇶',
     NZL: '🇳🇿',
-}
+} */
 
 function useMatches() {
     const [matches, setMatches] = useState<Match[]>(MOCK_MATCHES)
@@ -69,7 +70,8 @@ function formatDate(dateStr: string): string {
 
 function TeamName({ code }: { code?: string }) {
     if (!code) return <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>TBD</span>
-    const flag = TEAM_FLAGS[code.toUpperCase()]
+    // const flag = TEAM_FLAGS[code.toUpperCase()]
+    const flag = getTeamFlag(code)
     return (
         <span style={{ display: 'flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap' }}>
             {flag && <span style={{ fontSize: 15 }}>{flag}</span>}
@@ -136,12 +138,7 @@ export default function SchedulePage() {
                 backdropFilter: 'blur(10px)', zIndex: 50,
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <Link href="/" style={{
-                        display: 'flex', alignItems: 'center', gap: 4,
-                        color: 'var(--text-muted)', textDecoration: 'none', fontSize: 13,
-                    }}>
-                        <ChevronLeft size={16} />
-                    </Link>
+
                     <Link href="/" style={{ textDecoration: 'none' }}>
                         <span style={{
                             fontWeight: 900, fontSize: 17,
@@ -275,7 +272,7 @@ export default function SchedulePage() {
 
                                 return (
                                     <Link key={match.id} href={`/match/${match.id}`} style={{ textDecoration: 'none' }}>
-                                        <div
+                                        <div className="schedule-match-row"
                                             style={{
                                                 padding: '12px 14px',
                                                 borderRadius: 10,
@@ -292,10 +289,10 @@ export default function SchedulePage() {
                                             onMouseLeave={e => e.currentTarget.style.background = featured ? 'rgba(46,204,113,0.05)' : 'var(--surface)'}
                                         >
                                             {/* Top row — time + teams + channel */}
-                                            <div style={{
+                                            {/*   <div style={{
                                                 display: 'flex', alignItems: 'center', gap: 12,
-                                            }}>
-                                                {/* TIME */}
+                                            }}> */}
+                                            <div className="schedule-row">
                                                 <div style={{ minWidth: 54, textAlign: 'center', flexShrink: 0 }}>
                                                     {live ? (
                                                         <span style={{ fontSize: 12, color: 'var(--red)', fontWeight: 700 }}>● LIVE</span>
@@ -319,11 +316,12 @@ export default function SchedulePage() {
                                                     </div>
                                                 </div>
 
-                                                {/* DIVIDER */}
+
                                                 <div style={{ width: 1, height: 32, background: 'var(--border)', flexShrink: 0 }} />
 
-                                                {/* TEAMS */}
-                                                <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+
+                                                {/*  <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}> */}
+                                                <div className="schedule-teams">
                                                     <TeamName code={match.homeTeam.short} />
 
                                                     <span style={{
@@ -342,9 +340,10 @@ export default function SchedulePage() {
                                                     <TeamName code={match.awayTeam.short} />
                                                 </div>
 
-                                                {/* CHANNEL — hidden on very small, shown on larger */}
+                                                {/*    {mainChannel && (
+                                                    <div style={{ flexShrink: 0 }}> */}
                                                 {mainChannel && (
-                                                    <div style={{ flexShrink: 0 }}>
+                                                    <div className="schedule-channel">
                                                         <span style={{
                                                             fontSize: 10, fontWeight: 600,
                                                             padding: '3px 8px', borderRadius: 5,
@@ -359,18 +358,8 @@ export default function SchedulePage() {
                                                     </div>
                                                 )}
                                             </div>
+                                            {/* Top row — time + teams + score + channel */}
 
-                                            {/* Bottom row — group label */}
-                                            {match.group && (
-                                                <div style={{
-                                                    marginTop: 6, paddingLeft: 67,
-                                                    fontSize: 10, color: 'var(--text-muted)',
-                                                    letterSpacing: '0.06em', textTransform: 'uppercase',
-                                                    fontFamily: 'var(--font-inter)',
-                                                }}>
-                                                    {match.group.replace(/_/g, ' ')}
-                                                </div>
-                                            )}
                                         </div>
                                     </Link>
                                 )

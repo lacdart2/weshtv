@@ -3,7 +3,9 @@
 import { useMemo } from 'react'
 import type { Match } from '@/lib/matches'
 import { getChannelsForMatch, getChannelColor, type Region } from '@/lib/channels'
-import { getAllTimes, isLateNight, isFeaturedMatch } from '@/lib/utils'
+import { getAllTimes, isLateNight, getDateKeyInTimezone, TIMEZONES } from '@/lib/utils'
+import { getTeamFlag } from '@/lib/teamFlags'
+import { useRouter } from 'next/navigation'
 
 function ChannelPill({ name, region }: { name: string; region: Region }) {
     const color = getChannelColor(region, name)
@@ -20,57 +22,46 @@ function ChannelPill({ name, region }: { name: string; region: Region }) {
     )
 }
 
-const TEAM_FLAGS: Record<string, string> = {
-    ALG: '🇩🇿', DZA: '🇩🇿',
-    TUN: '🇹🇳',
-    MAR: '🇲🇦', MOR: '🇲🇦',
-    NOR: '🇳🇴',
-    EGY: '🇪🇬',
-}
 
 interface Props {
     matches: Match[]
     region: Region
-    onJump: (date: string) => void
 }
 
-export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
+export default function NextFeaturedBanner({ matches, region }: Props) {
+    const router = useRouter()
     const now = new Date()
-
     const banner = useMemo(() => {
+        const currentTime = new Date()
+
         const sorted = [...matches].sort(
             (a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()
         )
 
-        // 1 — LIVE RIGHT NOW (any match)
         const live = sorted.find(m =>
             m.status === 'IN_PLAY' || m.status === 'PAUSED'
         )
         if (live) return { type: 'live' as const, match: live }
 
-        // 2 — STARTING WITHIN 3 HOURS (any match)
         const soon = sorted.find(m => {
-            const diff = new Date(m.utcDate).getTime() - now.getTime()
+            const diff = new Date(m.utcDate).getTime() - currentTime.getTime()
             return diff > 0 && diff <= 3 * 3600000 && m.status === 'SCHEDULED'
         })
         if (soon) return { type: 'soon' as const, match: soon }
 
-        // 3 — NEXT FEATURED TEAM MATCH
-        const featured = sorted.find(m => {
-            const isFeat = isFeaturedMatch(m.homeTeam.short ?? '', m.awayTeam.short ?? '')
-            const isUpcoming = new Date(m.utcDate) > now
-            return isFeat && isUpcoming && m.status !== 'FINISHED'
+        const next = sorted.find(m => {
+            const isUpcoming = new Date(m.utcDate) > currentTime
+            return isUpcoming && m.status !== 'FINISHED'
         })
-        if (featured) return { type: 'featured' as const, match: featured }
+        if (next) return { type: 'next' as const, match: next }
 
         return null
     }, [matches])
-
     if (!banner) return null
 
     const { type, match } = banner
     const t = getAllTimes(match.utcDate, region)
-    const date = match.utcDate.split('T')[0]
+    const date = getDateKeyInTimezone(match.utcDate, TIMEZONES[region])
     const channels = getChannelsForMatch(region, match.homeTeam.short, match.awayTeam.short, match.stage)
     const lateNight = isLateNight(match.utcDate, region)
 
@@ -100,8 +91,8 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
             bg: 'rgba(243,156,18,0.06)',
             border: 'rgba(243,156,18,0.2)',
         },
-        featured: {
-            label: `${getFeaturedFlag(match)} Next important · ${timeUntil}`,
+        next: {
+            label: `Next match · ${timeUntil}`,
             color: 'var(--accent)',
             bg: 'rgba(46,204,113,0.06)',
             border: 'rgba(46,204,113,0.15)',
@@ -110,7 +101,7 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
 
     return (
         <div
-            onClick={() => onJump(date)}
+            onClick={() => router.push(`/match/${match.id}`)}
             style={{
                 padding: '10px 20px',
                 background: config.bg,
@@ -134,8 +125,15 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
                 }}>
                     {config.label}
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
+                {/* <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
                     {match.homeTeam.short} vs {match.awayTeam.short}
+                    {lateNight && type !== 'live' && (
+                        <span style={{ marginLeft: 6 }}>🌙</span>
+                    )}
+                </div> */}
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
+                    {getTeamFlag(match.homeTeam.short)} {match.homeTeam.short} vs{' '}
+                    {getTeamFlag(match.awayTeam.short)} {match.awayTeam.short}
                     {lateNight && type !== 'live' && (
                         <span style={{ marginLeft: 6 }}>🌙</span>
                     )}
@@ -165,9 +163,3 @@ export default function NextFeaturedBanner({ matches, region, onJump }: Props) {
     )
 }
 
-// Helper — get flag for featured team in match
-function getFeaturedFlag(match: Match): string {
-    const home = match.homeTeam.short?.toUpperCase() ?? ''
-    const away = match.awayTeam.short?.toUpperCase() ?? ''
-    return TEAM_FLAGS[home] ?? TEAM_FLAGS[away] ?? '⚽'
-}

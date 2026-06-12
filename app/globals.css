@@ -298,3 +298,55 @@ div {
 .font-display {
     font-family: var(--font-barlow), system-ui, sans-serif;
 }
+
+/* =========================================================
+   SCHEDULE PAGE — responsive row
+========================================================= */
+
+.schedule-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.schedule-teams {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.schedule-channel {
+    flex-shrink: 0;
+}
+
+@media (max-width: 380px) {
+    .schedule-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .schedule-teams {
+        flex-basis: 100%;
+        order: 2;
+    }
+
+    .schedule-channel {
+        order: 3;
+        flex-basis: 100%;
+        padding-left: 66px;
+    }
+}
+
+/* =========================================================
+   SCHEDULE PAGE — mobile padding
+========================================================= */
+
+@media (max-width: 480px) {
+    .schedule-match-row {
+        padding: 14px 18px !important;
+        min-height: 58px;
+    }
+}
