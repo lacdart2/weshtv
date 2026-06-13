@@ -86,6 +86,20 @@ export function getFullDateLabel(dateStr: string): string {
     return d.toLocaleDateString('en', { weekday: 'long', day: 'numeric', month: 'long' })
 }
 
+export function getStadiumTime(utcDate: string, timezone: string): string {
+    return new Date(utcDate).toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: timezone,
+        hour12: false,
+    })
+}
+
+export function getLocalDate(utcDate: string, timezone: string): string {
+    return new Date(utcDate).toLocaleDateString('en', {
+        day: 'numeric', month: 'short', timeZone: timezone,
+    })
+}
 export function todayStr(region?: Region): string {
     if (!region) {
         return new Date().toISOString().split('T')[0]

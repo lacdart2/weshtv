@@ -12,7 +12,7 @@ import {
 } from '@/lib/channels'
 import { getVenueByTeams } from '@/lib/matchVenues'
 import { MapPin, ChevronLeft, Moon } from 'lucide-react'
-import { getAllTimes, isLateNight } from '@/lib/utils'
+import { getAllTimes, isLateNight, getStadiumTime, getLocalDate } from '@/lib/utils'
 import { getVenue } from '@/lib/venues'
 import Footer from '@/components/Footer'
 import BottomNav from '@/components/BottomNav'
@@ -157,12 +157,25 @@ export default function MatchDetailPage() {
     const finished = match.status === 'FINISHED'
     const hasScore = match.score.home !== null
     const matchStats = match as MatchWithStats
-    const timeRows = [
-        { flag: '🇩🇿', label: 'Algeria', time: t.dz },
-        { flag: '🇳🇴', label: 'Norway', time: t.no },
-        { flag: '🇺🇸', label: 'USA East', time: t.us },
-    ]
+    const stadiumTime = venue?.timezone ? getStadiumTime(match.utcDate, venue.timezone) : null
+    const stadiumFlag = venue?.country === 'Canada' ? '🇨🇦' : venue?.country === 'Mexico' ? '🇲🇽' : '🇺🇸'
+    const stadiumLabel = venue ? `${venue.city}` : 'Americas'
+    const dzDate = getLocalDate(match.utcDate, 'Africa/Algiers')
+    const noDate = getLocalDate(match.utcDate, 'Europe/Oslo')
+    const stadiumDate = venue?.timezone ? getLocalDate(match.utcDate, venue.timezone) : null
 
+    // Only show date if rows differ from each other
+    const allDates = [dzDate, noDate, stadiumDate ?? dzDate]
+    const datesMatch = allDates.every(d => d === allDates[0])
+
+    const timeRows = [
+        { flag: '🇩🇿', label: 'Algeria', time: t.dz, date: datesMatch ? null : dzDate },
+        { flag: '🇳🇴', label: 'Norway', time: t.no, date: datesMatch ? null : noDate },
+        ...(stadiumTime
+            ? [{ flag: stadiumFlag, label: stadiumLabel, time: stadiumTime, date: datesMatch ? null : stadiumDate }]
+            : [{ flag: '🇺🇸', label: 'USA East', time: t.us, date: null }]
+        ),
+    ]
     return (
         <div style={{
             minHeight: '100vh',
@@ -394,13 +407,23 @@ export default function MatchDetailPage() {
                                         <span>{row.flag}</span>
                                         {row.label}
                                     </span>
-                                    <strong style={{
-                                        color: 'var(--text)', fontSize: 14,
-                                        fontFamily: 'var(--font-barlow)',
-                                        fontVariantNumeric: 'tabular-nums',
-                                    }}>
-                                        {row.time}
-                                    </strong>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
+                                        <strong style={{
+                                            color: 'var(--text)', fontSize: 14,
+                                            fontFamily: 'var(--font-barlow)',
+                                            fontVariantNumeric: 'tabular-nums',
+                                        }}>
+                                            {row.time}
+                                        </strong>
+                                        {row.date && (
+                                            <span style={{
+                                                fontSize: 11, color: 'var(--text-muted)',
+                                                fontFamily: 'var(--font-inter)',
+                                            }}>
+                                                {row.date}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>

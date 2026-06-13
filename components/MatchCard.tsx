@@ -10,7 +10,7 @@ import Crest from './Crest'
 import LiveDot from './LiveDot'
 import ChannelPill from './ChannelPill'
 import TimeTooltip from './TimeTooltip'
-import { Moon, Share2, Copy, Check } from 'lucide-react'
+import { Moon, Copy, Check } from 'lucide-react'
 import { getVenueByTeams } from '@/lib/matchVenues'
 
 export default function MatchCard({
