@@ -11,7 +11,7 @@ import {
     type Region,
 } from '@/lib/channels'
 import { getVenueByTeams } from '@/lib/matchVenues'
-import { MapPin, ChevronLeft, Moon } from 'lucide-react'
+import { MapPin, ChevronLeft, Moon, Sun, Cloud, CloudSun, CloudDrizzle, CloudRain, CloudSnow, CloudLightning, Thermometer, Wind } from 'lucide-react'
 import { getAllTimes, isLateNight, getStadiumTime, getLocalDate } from '@/lib/utils'
 import { getVenue } from '@/lib/venues'
 import Footer from '@/components/Footer'
@@ -40,20 +40,27 @@ async function fetchWeather(lat: number, lon: number, utcDate: string): Promise<
         const data = await response.json()
         const temp = Math.round(data.daily.temperature_2m_max[0])
         const code = data.daily.weathercode[0]
+
         const conditions: Record<number, { condition: string; icon: string }> = {
-            0: { condition: 'Clear sky', icon: '☀️' },
-            1: { condition: 'Mainly clear', icon: '🌤️' },
-            2: { condition: 'Partly cloudy', icon: '⛅' },
-            3: { condition: 'Overcast', icon: '☁️' },
-            45: { condition: 'Foggy', icon: '🌫️' },
-            51: { condition: 'Light drizzle', icon: '🌦️' },
-            61: { condition: 'Light rain', icon: '🌧️' },
-            63: { condition: 'Moderate rain', icon: '🌧️' },
-            71: { condition: 'Light snow', icon: '🌨️' },
-            80: { condition: 'Rain showers', icon: '🌦️' },
-            95: { condition: 'Thunderstorm', icon: '⛈️' },
+            0: { condition: 'Clear sky', icon: 'sun' },
+            1: { condition: 'Mainly clear', icon: 'sun' },
+            2: { condition: 'Partly cloudy', icon: 'cloud-sun' },
+            3: { condition: 'Overcast', icon: 'cloud' },
+            45: { condition: 'Foggy', icon: 'wind' },
+            48: { condition: 'Foggy', icon: 'wind' },
+            51: { condition: 'Light drizzle', icon: 'cloud-drizzle' },
+            53: { condition: 'Drizzle', icon: 'cloud-drizzle' },
+            61: { condition: 'Light rain', icon: 'cloud-rain' },
+            63: { condition: 'Moderate rain', icon: 'cloud-rain' },
+            65: { condition: 'Heavy rain', icon: 'cloud-rain' },
+            71: { condition: 'Light snow', icon: 'cloud-snow' },
+            73: { condition: 'Snow', icon: 'cloud-snow' },
+            80: { condition: 'Rain showers', icon: 'cloud-rain' },
+            81: { condition: 'Rain showers', icon: 'cloud-rain' },
+            95: { condition: 'Thunderstorm', icon: 'cloud-lightning' },
+            96: { condition: 'Thunderstorm', icon: 'cloud-lightning' },
         }
-        const weather = conditions[code] ?? { condition: 'Mixed', icon: '🌡️' }
+        const weather = conditions[code] ?? { condition: 'Mixed', icon: 'thermometer' }
         return { temp, ...weather }
     } catch {
         return null
@@ -131,12 +138,14 @@ export default function MatchDetailPage() {
 
     useEffect(() => {
         if (!match) return
-        const venue = getVenue(match.venue) ?? getVenue(match.venue?.split(',')[0])
-        if (venue) {
-            fetchWeather(venue.lat, venue.lon, match.utcDate).then(setWeather)
+        const venueNameFromTeams = getVenueByTeams(match.homeTeam.short, match.awayTeam.short)
+        const resolvedVenue = getVenue(match.venue)
+            ?? getVenue(match.venue?.split(',')[0])
+            ?? getVenue(venueNameFromTeams ?? '')
+        if (resolvedVenue) {
+            fetchWeather(resolvedVenue.lat, resolvedVenue.lon, match.utcDate).then(setWeather)
         }
     }, [match])
-
     if (!match) {
         return (
             <div style={{
@@ -567,7 +576,17 @@ export default function MatchDetailPage() {
                                         {weather.condition}
                                     </div>
                                 </div>
-                                <div style={{ fontSize: 44 }}>{weather.icon}</div>
+                                <div style={{ color: 'var(--text-dim)', opacity: 0.9 }}>
+                                    {weather.icon === 'sun' && <Sun size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud-sun' && <CloudSun size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud' && <Cloud size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'wind' && <Wind size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud-drizzle' && <CloudDrizzle size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud-rain' && <CloudRain size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud-snow' && <CloudSnow size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'cloud-lightning' && <CloudLightning size={48} strokeWidth={1.5} />}
+                                    {weather.icon === 'thermometer' && <Thermometer size={48} strokeWidth={1.5} />}
+                                </div>
                             </div>
                         </Card>
                     )}
