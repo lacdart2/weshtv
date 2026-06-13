@@ -132,6 +132,27 @@ export default function Home() {
             ),
         [allMatches, selectedDateResolved, region]
     )
+
+    // Late night preview — ONLY next calendar day matches 00:00–05:59
+    const nextDayEarlyMatches = useMemo(() => {
+        if (selectedDateResolved !== today) return []
+        // Calculate tomorrow's date string
+        const todayDateObj = new Date(today + 'T12:00:00Z')
+        todayDateObj.setUTCDate(todayDateObj.getUTCDate() + 1)
+        const tomorrow = todayDateObj.toISOString().split('T')[0]
+
+        return allMatches.filter((match) => {
+            const matchDate = getDateKeyInTimezone(match.utcDate, TIMEZONES[region])
+            if (matchDate !== tomorrow) return false // only strictly next day
+            const hour = parseInt(
+                new Date(match.utcDate).toLocaleTimeString('fr-FR', {
+                    hour: '2-digit', timeZone: TIMEZONES[region],
+                })
+            )
+            return hour >= 0 && hour < 6
+        })
+    }, [allMatches, selectedDateResolved, region, today])
+
     const liveCount = useMemo(
         () => allMatches.filter((m) => m.status === 'IN_PLAY' || m.status === 'PAUSED').length,
         [allMatches]
@@ -450,6 +471,36 @@ export default function Home() {
                         {matches.map((match) => (
                             <MatchCard key={match.id} match={match} region={region} />
                         ))}
+
+                        {nextDayEarlyMatches.length > 0 && (
+                            <>
+                                <div style={{
+                                    display: 'flex', alignItems: 'center', gap: 10,
+                                    margin: '12px 0 4px',
+                                }}>
+                                    <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                                    <span style={{
+                                        fontSize: 10, fontWeight: 600,
+                                        color: 'var(--text-muted)',
+                                        letterSpacing: '0.1em',
+                                        textTransform: 'uppercase',
+                                        fontFamily: 'var(--font-inter)',
+                                        whiteSpace: 'nowrap',
+                                    }}>
+                                        🌙 {getFullDateLabel(
+                                            getDateKeyInTimezone(
+                                                nextDayEarlyMatches[0].utcDate,
+                                                TIMEZONES[region]
+                                            )
+                                        )}
+                                    </span>
+                                    <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                                </div>
+                                {nextDayEarlyMatches.map((match) => (
+                                    <MatchCard key={match.id} match={match} region={region} />
+                                ))}
+                            </>
+                        )}
                     </div>
                 </div>
 
