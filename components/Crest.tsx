@@ -1,3 +1,4 @@
+
 import Image from 'next/image'
 
 export default function Crest({ src, alt, size = 20 }: {
@@ -17,5 +18,17 @@ export default function Crest({ src, alt, size = 20 }: {
             />
         )
     }
-    return <span style={{ fontSize: size * 0.8 }}>{src}</span>
+    return (
+        <span style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: size,
+            height: size,
+            fontSize: size * 0.82,
+            lineHeight: 1,
+        }}>
+            {src}
+        </span>
+    )
 }
