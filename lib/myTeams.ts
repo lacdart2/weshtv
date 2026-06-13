@@ -20,6 +20,7 @@ export function useMyTeams() {
     const [myTeams, setMyTeams] = useState<string[]>([])
 
     useEffect(() => {
+        // eslint-disable-next-line react-compiler/react-compiler
         setMyTeams(getMyTeams())
     }, [])
 

@@ -66,10 +66,33 @@ export default function Home() {
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
-            setRegion(detectRegionByTimezone())
+            const detectedRegion = detectRegionByTimezone()
+            setRegion(detectedRegion)
+            setToday(todayStr(detectedRegion))
         }, 0)
         return () => window.clearTimeout(timer)
     }, [])
+
+    // Live today — updates every 60s, catches midnight flip for all regions
+    const [today, setToday] = useState(() => todayStr('dz'))
+
+    useEffect(() => {
+        setToday(todayStr(region))
+    }, [region])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const newToday = todayStr(region)
+            setToday(prev => {
+                if (newToday !== prev) {
+                    setSelectedDate('') // reset to auto-jump to new day
+                    return newToday
+                }
+                return prev
+            })
+        }, 60000)
+        return () => clearInterval(interval)
+    }, [region])
 
     const dates = useMemo(() => {
         const uniqueDates = new Set(
@@ -81,7 +104,6 @@ export default function Home() {
         return Array.from(uniqueDates).sort()
     }, [allMatches, region])
 
-    const today = todayStr(region)
     const selectedDateResolved = useMemo(() => {
         if (selectedDate) return selectedDate
 
@@ -124,6 +146,8 @@ export default function Home() {
 
     function handleRegionChange(nextRegion: Region) {
         setRegion(nextRegion)
+        setToday(todayStr(nextRegion))
+        setSelectedDate('')
         localStorage.setItem('weshtv-region', nextRegion)
     }
 
