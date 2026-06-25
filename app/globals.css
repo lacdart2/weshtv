@@ -384,3 +384,58 @@ div {
         font-size: 14px !important;
     }
 }
+
+/* =========================================================
+   GROUPS PAGE — responsive grid
+========================================================= */
+
+.groups-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 860px) {
+    .groups-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .groups-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Bigger fonts on mobile for readability */
+    .groups-grid .group-header-cell {
+        font-size: 13px !important;
+    }
+
+    .groups-grid .group-team-flag {
+        font-size: 18px !important;
+    }
+
+    .groups-grid .group-team-name {
+        font-size: 15px !important;
+    }
+
+    .groups-grid .group-stat {
+        font-size: 15px !important;
+    }
+
+    .groups-grid .group-gd {
+        font-size: 15px !important;
+    }
+
+    .groups-grid .group-pts {
+        font-size: 16px !important;
+    }
+
+    .groups-grid .group-pos {
+        font-size: 14px !important;
+    }
+
+    .groups-grid .group-row {
+        padding: 12px 12px !important;
+    }
+}

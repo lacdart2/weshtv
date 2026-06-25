@@ -11,9 +11,9 @@ const ALL_TEAMS = [
     'ENG', 'POR', 'USA', 'MEX', 'CAN',
     'JPN', 'KOR', 'AUS', 'NED', 'BEL',
     'SUI', 'CRO', 'SEN', 'URY', 'COL',
-    'ECU', 'PAR', 'QAT', 'IRN', 'DEN',
-    'RSA', 'GHA', 'CMR', 'CIV', 'TUR',
-    'POL', 'SRB', 'UKR', 'HAI', 'JAM',
+    'ECU', 'PAR', 'QAT', 'IRN',
+    'RSA', 'GHA', 'CIV', 'TUR',
+    'SRB', 'UKR', 'HAI',
     'CPV', 'CUW', 'BIH', 'UZB', 'JOR',
     'IRQ', 'NZL', 'SCO',
 ]

@@ -17,6 +17,16 @@ export const TEAM_FLAGS: Record<string, string> = {
     CPV: '🇨🇻', CUW: '🇨🇼', BIH: '🇧🇦',
     UZB: '🇺🇿', JOR: '🇯🇴', IRQ: '🇮🇶',
     NZL: '🇳🇿',
+    // Aliases & missing qualified teams
+    URU: '🇺🇾',  // API uses URU not URY
+    KSA: '🇸🇦',
+    AUT: '🇦🇹',
+    DRC: '🇨🇩',
+    PAN: '🇵🇦',
+    // Extra API TLA aliases
+    CZE: '🇨🇿',
+    SVK: '🇸🇰',
+
 }
 
 export function getTeamFlag(code: string | null | undefined): string | null {

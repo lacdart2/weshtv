@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Calendar, Globe } from 'lucide-react'
+import { Home, Calendar, Globe, LayoutGrid } from 'lucide-react'
 import type { Region } from '@/lib/channels'
 
 export default function BottomNav({
@@ -54,6 +54,18 @@ export default function BottomNav({
                 </span>
             </Link>
 
+            <Link href="/groups" style={{
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 4,
+                textDecoration: 'none',
+                color: path === '/groups' || path === '/bracket' ? 'var(--accent)' : 'var(--text-muted)',
+                transition: 'color 0.15s',
+            }}>
+                <LayoutGrid size={20} />
+                <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    Groups
+                </span>
+            </Link>
             <button
                 onClick={onRegionToggle}
                 style={{
