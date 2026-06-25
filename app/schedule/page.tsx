@@ -400,7 +400,6 @@ export default function SchedulePage() {
                 onToggle={toggleTeam}
             />
             <Footer />
-            {/*  <BottomNav region={region} onRegionToggle={toggleRegion} /> */}
             <BottomNav />
         </div>
     )

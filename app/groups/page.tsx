@@ -57,14 +57,6 @@ export default function GroupsPage() {
         localStorage.setItem('weshtv-region', nextRegion)
     }
 
-    /*  function toggleRegion() {
-         setRegion(cur => {
-             const next = cur === 'dz' ? 'no' : 'dz'
-             localStorage.setItem('weshtv-region', next)
-             return next
-         })
-     } */
-
     return (
         <div style={{ minHeight: '100vh', background: 'var(--black)', display: 'flex', flexDirection: 'column' }}>
             <Navbar

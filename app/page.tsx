@@ -172,14 +172,6 @@ export default function Home() {
         localStorage.setItem('weshtv-region', nextRegion)
     }
 
-    /*    function toggleRegion() {
-           setRegion((cur) => {
-               const next = cur === 'dz' ? 'no' : 'dz'
-               localStorage.setItem('weshtv-region', next)
-               return next
-           })
-       } */
-
     return (
         <div
             style={{
