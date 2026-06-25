@@ -438,4 +438,8 @@ div {
     .groups-grid .group-row {
         padding: 12px 12px !important;
     }
+
+    .groups-grid .group-title {
+        font-size: 18px !important;
+    }
 }

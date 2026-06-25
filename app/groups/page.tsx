@@ -113,12 +113,12 @@ export default function GroupsPage() {
                         return (
                             <div key={group.group} style={{ marginBottom: 8 }}>
                                 {/* Group title */}
-                                <div style={{
-                                    fontSize: 12, fontWeight: 800,
+                                <div className="group-title" style={{
+                                    fontSize: 16, fontWeight: 900,
                                     color: 'var(--accent)', letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
                                     fontFamily: 'var(--font-barlow)',
-                                    marginBottom: 6,
+                                    marginBottom: 8,
                                 }}>
                                     {groupLetter}
                                 </div>
