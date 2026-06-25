@@ -88,14 +88,14 @@ export default function GroupsPage() {
                         <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                             12 groups · World Cup 2026
                         </p>
-                        <Link href="/bracket" style={{
+                        <Link href="/phases" style={{
                             fontSize: 11, fontWeight: 600, color: 'var(--accent)',
                             textDecoration: 'none', letterSpacing: '0.06em',
                             padding: '4px 10px', borderRadius: 6,
                             border: '1px solid rgba(46,204,113,0.3)',
                             background: 'var(--accent-dim)',
                         }}>
-                            Bracket →
+                            Phases Finales →
                         </Link>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ export default function GroupsPage() {
                             <div key={group.group} style={{ marginBottom: 8 }}>
                                 {/* Group title */}
                                 <div className="group-title" style={{
-                                    fontSize: 16, fontWeight: 900,
+                                    fontSize: 14, fontWeight: 900,
                                     color: 'var(--accent)', letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
                                     fontFamily: 'var(--font-barlow)',

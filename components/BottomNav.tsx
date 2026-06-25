@@ -2,16 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Calendar, Globe, LayoutGrid } from 'lucide-react'
-import type { Region } from '@/lib/channels'
+import { Home, Calendar, LayoutGrid, Trophy } from 'lucide-react'
 
-export default function BottomNav({
-    region,
-    onRegionToggle,
-}: {
-    region?: Region
-    onRegionToggle?: () => void
-}) {
+
+export default function BottomNav() {
     const path = usePathname()
 
     return (
@@ -63,28 +57,21 @@ export default function BottomNav({
             }}>
                 <LayoutGrid size={20} />
                 <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    Groups
+                    Groupes
                 </span>
             </Link>
-            <button
-                onClick={onRegionToggle}
-                style={{
-                    display: 'flex', flexDirection: 'column',
-                    alignItems: 'center', gap: 4,
-                    background: 'transparent', border: 'none',
-                    cursor: onRegionToggle ? 'pointer' : 'default',
-                    color: 'var(--text-muted)',
-                }}
-            >
-                <Globe size={20} color={region === 'dz' ? 'var(--accent)' : region === 'no' ? 'var(--text-muted)' : 'var(--text-muted)'} />
-                <span style={{
-                    fontSize: 9, fontWeight: 600,
-                    letterSpacing: '0.08em', textTransform: 'uppercase',
-                    color: 'var(--text-muted)',
-                }}>
-                    {region === 'dz' ? '🇩🇿 DZ' : region === 'no' ? '🇳🇴 NO' : 'Region'}
+            <Link href="/phases" style={{
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 4,
+                textDecoration: 'none',
+                color: path === '/phases' ? 'var(--accent)' : 'var(--text-muted)',
+                transition: 'color 0.15s',
+            }}>
+                <Trophy size={20} />
+                <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    Phases
                 </span>
-            </button>
+            </Link>
         </div>
     )
 }
