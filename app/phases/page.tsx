@@ -262,7 +262,8 @@ export default function PhasesPage() {
             </div>
 
             <Footer />
-            <BottomNav region={region} onRegionToggle={toggleRegion} />
+            {/*   <BottomNav region={region} onRegionToggle={toggleRegion} /> */}
+            <BottomNav />
         </div>
     )
 }
