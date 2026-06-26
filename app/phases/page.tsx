@@ -166,6 +166,15 @@ export default function PhasesPage() {
         [knockoutMatches, activeRound]
     )
 
+    const allTeamsKnown = useMemo(() => {
+        if (roundMatches.length === 0) return false
+        return roundMatches.every(m => {
+            const homeKnown = m.homeTeam.short && m.homeTeam.short !== 'TBD'
+            const awayKnown = m.awayTeam.short && m.awayTeam.short !== 'TBD'
+            return homeKnown && awayKnown
+        })
+    }, [roundMatches])
+
     useEffect(() => {
         if (
             availableRounds.length > 0 &&
@@ -245,23 +254,24 @@ export default function PhasesPage() {
                         </Link>
                     </div>
 
-                    <div
-                        style={{
-                            marginTop: 12,
-                            padding: '10px 12px',
-                            borderRadius: 10,
-                            background: 'var(--surface)',
-                            border: '1px solid var(--border)',
-                            color: 'var(--text-muted)',
-                            fontSize: 12,
-                            lineHeight: 1.5,
-                            fontFamily: 'var(--font-inter)',
-                        }}
-                    >
-                        Les équipes apparaîtront ici dès que leur classement de groupe sera confirmé.
-                        En attendant, chaque carte montre le chemin de qualification, par exemple
-                        “1er Groupe A” ou “2e Groupe B”.
-                    </div>
+                    {!allTeamsKnown && (
+                        <div
+                            style={{
+                                marginTop: 12,
+                                padding: '10px 12px',
+                                borderRadius: 10,
+                                background: 'var(--surface)',
+                                border: '1px solid var(--border)',
+                                color: 'var(--text-muted)',
+                                fontSize: 12,
+                                lineHeight: 1.5,
+                                fontFamily: 'var(--font-inter)',
+                            }}
+                        >
+                            Les équipes apparaîtront ici dès que leur classement de groupe sera confirmé.
+                            En attendant, chaque carte montre le chemin de qualification.
+                        </div>
+                    )}
                 </div>
 
                 {/* Round tabs */}
@@ -372,7 +382,7 @@ export default function PhasesPage() {
                     {roundMatches.map((match, index) => {
                         const t = getAllTimes(match.utcDate, region)
                         const live = match.status === 'IN_PLAY' || match.status === 'PAUSED'
-                        const finished = match.status === 'FINISHED'
+
                         const hasScore = match.score.home !== null
 
                         const home = getTeamDisplay(match.homeTeam, activeRound, match.id, 'home')
@@ -450,6 +460,7 @@ export default function PhasesPage() {
                                         <TeamSlot team={home} align="left" />
 
                                         <div
+                                            className="phases-center"
                                             style={{
                                                 minWidth: 86,
                                                 display: 'flex',
@@ -459,6 +470,7 @@ export default function PhasesPage() {
                                             }}
                                         >
                                             <div
+                                                className="phases-center-score"
                                                 style={{
                                                     fontSize: hasScore ? 22 : 20,
                                                     fontWeight: 900,
@@ -533,6 +545,7 @@ function TeamSlot({ team, align }: { team: TeamDisplay; align: 'left' | 'right' 
             }}
         >
             <span
+                className="phases-team-flag"
                 style={{
                     fontSize: team.isKnownTeam ? 24 : 20,
                     lineHeight: 1,
@@ -542,6 +555,7 @@ function TeamSlot({ team, align }: { team: TeamDisplay; align: 'left' | 'right' 
             </span>
 
             <span
+                className="phases-team-title"
                 style={{
                     fontSize: team.isKnownTeam ? 15 : 13,
                     fontWeight: 900,
@@ -562,6 +576,7 @@ function TeamSlot({ team, align }: { team: TeamDisplay; align: 'left' | 'right' 
             </span>
 
             <span
+                className="phases-team-subtitle"
                 style={{
                     fontSize: 10,
                     color: 'var(--text-muted)',

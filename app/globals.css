@@ -443,3 +443,30 @@ div {
         font-size: 18px !important;
     }
 }
+
+/* =========================================================
+   PHASES PAGE — mobile fixes
+========================================================= */
+
+@media (max-width: 480px) {
+    .phases-team-title {
+        font-size: 12px !important;
+        max-width: 100px !important;
+    }
+
+    .phases-team-subtitle {
+        display: none !important;
+    }
+
+    .phases-team-flag {
+        font-size: 18px !important;
+    }
+
+    .phases-center {
+        min-width: 70px !important;
+    }
+
+    .phases-center-score {
+        font-size: 16px !important;
+    }
+}
