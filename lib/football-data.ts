@@ -37,7 +37,7 @@ export async function getWorldCupMatches(): Promise<APIMatch[]> {
 
     const res = await fetch(`${BASE}/competitions/WC/matches`, {
         headers: { 'X-Auth-Token': apiKey },
-        next: { revalidate: 3600 }, // cache 1 hour
+        next: { revalidate: 60 },
     })
 
     if (!res.ok) {
