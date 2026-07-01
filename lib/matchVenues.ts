@@ -94,6 +94,44 @@ const MATCH_VENUES: Record<string, string> = {
     'PAN-CRO': 'BMO Field',
     'PAN-ENG': 'MetLife Stadium',
     'CRO-GHA': 'Lincoln Financial Field',
+
+    // Round of 32
+    'RSA-CAN': 'SoFi Stadium',
+    'BRA-JPN': 'NRG Stadium',
+    'GER-PAR': 'Gillette Stadium',
+    'NED-MAR': 'Estadio BBVA',
+    'CIV-NOR': 'AT&T Stadium',
+    'FRA-SWE': 'MetLife Stadium',
+    'MEX-ECU': 'Estadio Azteca',
+    'ENG-DRC': 'Mercedes-Benz Stadium',
+    'BEL-SEN': 'Lumen Field',
+    'USA-BIH': "Levi's Stadium",
+    'ESP-AUT': 'SoFi Stadium',
+    'POR-CRO': 'BMO Field',
+    'SUI-ALG': 'BC Place',
+    'EGY-AUS': 'AT&T Stadium',
+    'ARG-CPV': 'Hard Rock Stadium',
+    'COL-GHA': 'Arrowhead Stadium',
+
+    // Round of 16
+    'CAN-MAR': 'NRG Stadium',
+    'PAR-FRA': 'Lincoln Financial Field',
+    'BRA-NOR': 'MetLife Stadium',
+    'MEX-ENG': 'Estadio Azteca',
+
+    // Quarter-finals
+    'QF1': 'AT&T Stadium',
+    'QF2': 'Lumen Field',
+    'QF3': 'Mercedes-Benz Stadium',
+    'QF4': 'BC Place',
+
+    // Semi-finals
+    'SF1': 'Gillette Stadium',
+    'SF2': 'AT&T Stadium',
+
+    // Third place + Final
+    'THIRD': 'Hard Rock Stadium',
+    'FINAL': 'MetLife Stadium',
 }
 
 export function getVenueByTeams(
