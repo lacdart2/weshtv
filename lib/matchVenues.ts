@@ -104,6 +104,7 @@ const MATCH_VENUES: Record<string, string> = {
     'FRA-SWE': 'MetLife Stadium',
     'MEX-ECU': 'Estadio Azteca',
     'ENG-DRC': 'Mercedes-Benz Stadium',
+    'ENG-COD': 'Mercedes-Benz Stadium',
     'BEL-SEN': 'Lumen Field',
     'USA-BIH': "Levi's Stadium",
     'ESP-AUT': 'SoFi Stadium',
